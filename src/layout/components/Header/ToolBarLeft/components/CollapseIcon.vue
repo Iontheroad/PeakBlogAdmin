@@ -1,9 +1,9 @@
 <template>
-  <div class="hamburger" @click="toggleClick">
+  <div class="collapse-icon" @click="toggleClick">
     <!-- 展开收起的按钮图标 -->
     <svg
       :class="{ 'is-active': sidebar.opened }"
-      class="hamburger-icon"
+      class="icon"
       viewBox="0 0 1024 1024"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -28,25 +28,26 @@ function toggleClick() {
 </script>
 
 <style scoped lang="scss">
-.hamburger {
+.collapse-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 50px;
-  line-height: 50px;
-  height: 100%;
-  text-align: center;
+  height: 50px;
   cursor: pointer;
   transition: background 0.3s; // 动画
   -webkit-tap-highlight-color: transparent;
   &:hover {
     background: rgb(0 0 0 / 2.5%);
   }
-  .hamburger-icon {
+  .icon {
     display: inline-block;
     vertical-align: middle;
     width: 20px;
     height: 20px;
-  }
-  .hamburger-icon.is-active {
-    transform: rotate(180deg);
+    &.is-active {
+      transform: rotate(180deg);
+    }
   }
 }
 </style>

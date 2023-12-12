@@ -32,8 +32,8 @@ const logo = ref<string>(new URL(`@/assets/peak_logo.png`, import.meta.url).href
 .logo {
   position: relative;
   width: 100%;
-  height: 50px;
-  line-height: 50px;
+  height: 60px;
+  line-height: 60px;
   background: #2b2f3a;
   text-align: center;
   overflow: hidden;

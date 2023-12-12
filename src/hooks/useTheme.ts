@@ -12,7 +12,7 @@ export const useTheme = () => {
   const themeConfig = computed(() => globalStore.themeConfig);
 
   // 修改主题颜色
-  const changePrimary = (val: string) => {
+  const changePrimary = (val: string | null): any => {
     if (!val) {
       val = DEFAULT_PRIMARY;
       ElMessage({

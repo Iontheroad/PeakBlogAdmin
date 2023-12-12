@@ -33,8 +33,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       // cors: true,
       proxy: {
         [env.VITE_API_URL]: {
-          // target: "http://47.94.217.248:10003",
-          target: "http://localhost:8889",
+          target: "http://47.94.217.248:8889",
+          // target: "http://localhost:8889",
           changeOrigin: true
           // rewrite: (path: string): string => {
           //   // 重写请求路径

@@ -5,6 +5,9 @@
   .el-aside {
     display: flex;
     flex-direction: column;
+    .el-scrollbar {
+      flex: 1;
+    }
     .el-menu {
       border-right: none;
     }

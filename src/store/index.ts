@@ -21,13 +21,13 @@ interface ThemeConfigProps {
   layout: "vertical" | "classic" | "transverse" | "columns";
   isShowLogo: boolean;
   isFixedHeader: boolean;
-  isShowBreadcrumb: Boolean;
-  isShowBreadcrumbIcon: Boolean;
+  isShowBreadcrumb: boolean;
+  isShowBreadcrumbIcon: boolean;
   isShowTabsView: boolean;
   isShowTabsIcon: boolean;
   isShowFooter: boolean;
   primary: string;
-  isDark: Boolean;
+  isDark: boolean;
 }
 
 // 全局状态
@@ -47,7 +47,7 @@ const useGlobalStore = defineStore("globalStore", {
       isShowTabsIcon: true, // 是否显示标签icon
       isShowFooter: true, // 是否显示页脚
       primary: DEFAULT_PRIMARY, // 默认 primary 主题颜色
-      isDark: false
+      isDark: false // 暗黑模式
     }
   }),
 

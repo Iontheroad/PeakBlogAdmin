@@ -30,11 +30,7 @@
     </div>
     <div class="theme-item">
       <span>
-        <el-tooltip
-          effect="dark"
-          content="移动端下不显示面包屑"
-          placement="right"
-        >
+        <el-tooltip effect="dark" content="移动端下不显示面包屑" placement="right">
           面包屑
         </el-tooltip>
       </span>
@@ -61,14 +57,15 @@
 
 <script setup lang="ts">
 import { ColdDrink, Setting } from "@element-plus/icons-vue";
-import { ref, computed, watch } from "vue";
+import { ref, computed } from "vue";
 import { useTheme } from "@/hooks/useTheme";
 import { useGlobalStore } from "@/store/index";
 import { DEFAULT_PRIMARY } from "@/config/config";
 // import SwitchDark from "@/components/SwitchDark/index.vue";
 import mittBus from "@/utils/mittBus";
 
-const { changePrimary } = useTheme();
+const { initTheme, changePrimary } = useTheme();
+initTheme(); // 初始化默认主题色主题
 
 // 预定义主题颜色
 const colorList = [
@@ -81,7 +78,7 @@ const colorList = [
   "#ff5c93",
   "#e74c3c",
   "#fd726d",
-  "#9b59b6",
+  "#9b59b6"
 ];
 
 const globalStore = useGlobalStore();

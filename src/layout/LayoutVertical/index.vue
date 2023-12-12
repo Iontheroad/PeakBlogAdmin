@@ -5,6 +5,7 @@
     <el-aside :style="{ width: isCollapse ? '65px' : '210px' }">
       <Logo v-if="themeConfig.isShowLogo" :collapse="isCollapse" />
       <el-scrollbar>
+        <!-- 响应式菜单 -->
         <el-menu
           :router="false"
           :default-active="activeMenu"
@@ -19,6 +20,7 @@
     <el-container class="layout-body">
       <!-- 头部 -->
       <LayoutHeader />
+      <!-- TODO:Tabs -->
       <!-- 视图区域 -->
       <LayoutMain />
       <LayoutFooter v-if="themeConfig.isShowFooter" />

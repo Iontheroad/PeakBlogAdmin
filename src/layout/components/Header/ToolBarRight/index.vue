@@ -18,8 +18,8 @@ import ThemeSetting from "./components/ThemeSetting.vue";
 <style scoped lang="scss">
 .header-tool-right {
   display: flex;
-  height: 100%;
   align-items: center;
+  height: 100%;
   .tools {
     display: flex;
     align-items: center;

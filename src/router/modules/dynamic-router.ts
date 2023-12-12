@@ -6,7 +6,6 @@ import router from "@/router";
 import { usePermissionStore } from "@/store/modules/permission";
 import { useUserStore } from "@/store/modules/user"; // 用户状态仓库
 import { RouteRecordRaw } from "vue-router";
-const modules = import.meta.glob("@/views/**/*.vue");
 
 /**
  * 初始化 添加异步路由信息
@@ -20,12 +19,22 @@ export const initDynamicRoute = async () => {
     // 1.获取异步路由菜单
     await permissionStore.getListRoutes_action();
 
-    // 2.动态路由添加
-    permissionStore.flatMenubarList_getters.forEach((item) => {
-      item?.children && delete item.children;
-      if (item.component && typeof item.component == "string") {
-        item.component = modules["/src/views" + item.component + ".vue"];
-      }
+    // // 2.动态路由添加-扁平添加
+    // const modules = import.meta.glob("@/views/**/*.vue");
+    // permissionStore.flatMenubarList_getters.forEach((item) => {
+    //   item?.children && delete item.children;
+    //   if (item.component && typeof item.component == "string") {
+    //     item.component = modules["/src/views" + item.component + ".vue"];
+    //   }
+    //   if (item?.meta?.isFull) {
+    //     router.addRoute(item as unknown as RouteRecordRaw);
+    //   } else {
+    //     router.addRoute("Layout", item as unknown as RouteRecordRaw);
+    //   }
+    // });
+
+    // 2.动态路由添加-树形添加
+    permissionStore.treeMenuList_getters.forEach((item) => {
       if (item?.meta?.isFull) {
         router.addRoute(item as unknown as RouteRecordRaw);
       } else {
