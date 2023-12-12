@@ -1,0 +1,16 @@
+.layout-container {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  .el-aside {
+    display: flex;
+    flex-direction: column;
+    .el-menu {
+      border-right: none;
+    }
+  }
+  .layout-body {
+    display: flex;
+    flex-direction: column;
+  }
+}

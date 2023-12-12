@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true, // 允许在类字段中使用 `defineProperties`
+    "module": "ESNext",
+    "types": ["vite/client", "element-plus/global"], //  // 指定要包含的类型包名
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true, // 跳过对声明文件（.d.ts）的检查,提高编译速度
+
+    /* Bundler mode */
+    "moduleResolution": "bundler", // 模块解析策略
+    "allowImportingTsExtensions": true, // 允许导入 .ts 后缀的文件
+    "resolveJsonModule": true, // 允许导入 .json 文件
+    "isolatedModules": true, // 使用独立的模块作用域
+    "noEmit": true, // 不生成声明文件
+    "jsx": "preserve",
+
+    /* 严格类型检查选项 */
+    "strict": true, // 启用所有严格类型检查选项。
+    // "noUnusedLocals": true, // 检查未使用的局部变量
+    // "noUnusedParameters": true, // 检查未使用的参数
+    // "noFallthroughCasesInSwitch": true // 检查 switch 语句中的 fallthrough
+    // "noImplicitAny": true, // 对带有隐含'any'类型的表达式和声明引发错误。
+    // "strictNullChecks": true, // 启用严格的空检查。
+    // "strictFunctionTypes": true,// 启用对函数类型的严格检查。
+    // "strictBindCallApply": true, // 在函数上启用严格的'bind'、'call'和'apply'方法。
+    // "strictPropertyInitialization": true,  // 对类中的属性初始化进行严格检查。
+    // "noImplicitThis": true, // 对带有隐含'any'类型的'this'表达式引发错误。
+    // "alwaysStrict": true, // 以严格模式解析并对每个源文件发出"use strict"。
+
+    "baseUrl": "./",
+    "paths": {
+      "@": ["src"],
+      "@/*": ["src/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "build/**/*.ts",
+    "build/**/*.d.ts",
+    "vite.config.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.js"]
+  // "references": [{ "path": "./tsconfig.node.json" }]
+}
