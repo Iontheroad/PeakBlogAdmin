@@ -1,8 +1,9 @@
 <template>
-  <el-container class="layout-container" :class="classObj">
+  <el-container class="layout-container">
     <!-- 移动端遮罩层 -->
-    <MobileMask />
-    <el-aside :style="{ width: isCollapse ? '65px' : '210px' }">
+    <!-- <MobileMask /> -->
+    <!-- TODO: 移动展开样式 -->
+    <el-aside :class="[menuResize, isCollapse && 'is-collapse']">
       <Logo v-if="themeConfig.isShowLogo" :collapse="isCollapse" />
       <el-scrollbar>
         <!-- 响应式菜单 -->
@@ -31,55 +32,37 @@
 <script lang="ts" setup name="LayoutVertical">
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
-// 组件
+
 import MobileMask from "@/layout/components/MobileMask.vue";
 import Logo from "@/layout/components/Menu/Logo.vue";
 import SubMenu from "@/layout/components/Menu/SubMenu.vue";
 import LayoutHeader from "@/layout/components/Header/index.vue";
-
 import LayoutMain from "@/layout/components/Main/index.vue";
 import LayoutFooter from "@/layout/components/Footer/index.vue";
-// store
+
 import { useAppStore } from "@/store/modules/app";
 import { usePermissionStore } from "@/store/modules/permission";
 import { useGlobalStore } from "@/store/index";
+import { useResize } from "@/hooks/useResize";
 const route = useRoute();
 const appStore = useAppStore();
 const globalStore = useGlobalStore();
 const permissionStore = usePermissionStore(); // 权限路由状态仓库
 
-const sidebar = computed(() => appStore.sidebar);
-// pc：desktop    移动：mobile 窗口宽度小于992
-const device = computed(() => appStore.device);
-const isCollapse = computed(() => !appStore.sidebar.opened); //是否折叠菜单
+const isCollapse = computed(() => appStore.sidebar.isCollapse); //是否折叠菜单
+
 const themeConfig = computed(() => globalStore.themeConfig);
+
+const { width, isCollapse: collapse, menuResize } = useResize();
+watch(width, () => {
+  appStore.toggleSidebar(collapse.value);
+});
 
 /* 高亮所设置的指定菜单 */
 const activeMenu = computed<string>(() => {
   const { meta, path } = route;
   if (meta?.activeMenu) return meta.activeMenu as string;
   return path;
-});
-/* 在mobile情况下,路由跳转后关闭菜单栏 */
-watch(route, () => {
-  if (device.value == "mobile" && sidebar.value.opened) {
-    appStore.closeSideBar(false);
-  }
-});
-/**
- * 根据菜单栏的展开/半收起/隐藏状态 动态添加样式类
- */
-const classObj = computed(() => {
-  return {
-    // 收起侧边栏
-    hideSidebar: !sidebar.value.opened,
-    // 打开侧边栏
-    openSidebar: sidebar.value.opened,
-    // 动画
-    withoutAnimation: sidebar.value.withoutAnimation,
-    // 移动端
-    mobile: device.value === "mobile" // 移动端
-  };
 });
 </script>
 

@@ -3,21 +3,21 @@ import { useAppStore } from "@/store/modules/app";
 import { computed } from "vue";
 const appStore = useAppStore();
 
-const sidebar = computed(() => appStore.sidebar);
+const isCollapse = computed(() => appStore.sidebar.isCollapse);
 // pc：desktop    移动：mobile 窗口宽度小于992
-const device = computed(() => appStore.device);
-
+import { useResize } from "@/hooks/useResize";
+const { menuResize } = useResize();
 /**
  * 点击空白处，移除遮罩层，并收起菜单
  */
 function handleClickOutside() {
-  appStore.closeSideBar(false);
+  appStore.toggleSidebar(isCollapse.value);
 }
 </script>
 
 <template>
   <div
-    v-if="device == 'mobile' && sidebar.opened"
+    v-if="menuResize == 'hidden' && isCollapse"
     class="drawer-bg"
     @click="handleClickOutside"
   />
