@@ -1,9 +1,8 @@
 <template>
   <el-container class="layout-container">
     <!-- 移动端遮罩层 -->
-    <!-- <MobileMask /> -->
-    <!-- TODO: 移动展开样式 -->
-    <el-aside :class="[menuResize, isCollapse && 'is-collapse']">
+    <MobileMask />
+    <el-aside :class="[menuResize, isCollapse ? 'is-collapse' : 'is-expand']">
       <Logo v-if="themeConfig.isShowLogo" :collapse="isCollapse" />
       <el-scrollbar>
         <!-- 响应式菜单 -->
@@ -53,10 +52,15 @@ const isCollapse = computed(() => appStore.sidebar.isCollapse); //是否折叠�
 
 const themeConfig = computed(() => globalStore.themeConfig);
 
+// FIXME: 调整
 const { width, isCollapse: collapse, menuResize } = useResize();
-watch(width, () => {
-  appStore.toggleSidebar(collapse.value);
-});
+watch(
+  width,
+  () => {
+    appStore.toggleSidebar(collapse.value);
+  },
+  { immediate: true }
+);
 
 /* 高亮所设置的指定菜单 */
 const activeMenu = computed<string>(() => {

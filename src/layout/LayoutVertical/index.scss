@@ -5,30 +5,40 @@
   .el-aside {
     display: flex;
     flex-direction: column;
+
+    // transition: width 4s;
+    transition: width 0.28s;
     .el-scrollbar {
       flex: 1;
       border-right: 1px solid #e4e7ed;
     }
     .el-menu {
       border-right: none;
-    }
-    &.expand {
-      width: 210px;
-    }
-    &.collapse {
-      width: 65px;
+      height: 100%;
     }
 
-    // TODO: 设置样式
+    // FIXME : 动画问题,类名调整
+    // 隐藏菜单栏
     &.hidden {
       position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1001;
-      width: 65px;
+      height: 100%;
+      background-color: #ffffff;
+      z-index: 100;
+    }
 
-      // transform: translateX(-210px);
-      transform: translateX(-65px);
+    // 展开菜单栏
+    &.is-expand {
+      width: 210px;
+    }
+
+    // 收起菜单栏
+    &.is-collapse {
+      width: 65px;
+      &.hidden {
+        // 收起隐藏
+        // transform: translateX(-210px);
+        transform: translateX(-65px);
+      }
     }
   }
   .layout-body {

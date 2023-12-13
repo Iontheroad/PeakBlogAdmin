@@ -17,7 +17,6 @@ const props = defineProps<{
   collapse: boolean;
 }>();
 let { collapse } = toRefs(props);
-console.log(collapse);
 
 let title = ref("Peak Vue3 Admin");
 const logo = ref<string>(new URL(`@/assets/peak_logo.png`, import.meta.url).href);
@@ -25,7 +24,6 @@ const logo = ref<string>(new URL(`@/assets/peak_logo.png`, import.meta.url).href
 
 <style lang="scss" scoped>
 .logo-box {
-  position: relative;
   width: 100%;
   height: 60px;
   line-height: 60px;
