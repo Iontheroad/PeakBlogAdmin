@@ -7,9 +7,12 @@
   </el-header>
 </template>
 
-<script lang="ts" setup name="Header">
+<script lang="ts" setup>
 import ToolBarLeft from "@/layout/components/Header/ToolBarLeft/index.vue";
 import ToolBarRight from "@/layout/components/Header/ToolBarRight/index.vue";
+defineOptions({
+  name: "LayoutHeader"
+});
 </script>
 
 <style lang="scss" scoped>

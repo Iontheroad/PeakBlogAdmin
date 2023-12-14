@@ -5,8 +5,6 @@
   .el-aside {
     display: flex;
     flex-direction: column;
-
-    // transition: width 4s;
     transition: width 0.28s;
     .el-scrollbar {
       flex: 1;
@@ -17,15 +15,6 @@
       height: 100%;
     }
 
-    // FIXME : 动画问题,类名调整
-    // 隐藏菜单栏
-    &.hidden {
-      position: fixed;
-      height: 100%;
-      background-color: #ffffff;
-      z-index: 100;
-    }
-
     // 展开菜单栏
     &.is-expand {
       width: 210px;
@@ -34,14 +23,22 @@
     // 收起菜单栏
     &.is-collapse {
       width: 65px;
-      &.hidden {
-        // 收起隐藏
-        // transform: translateX(-210px);
+    }
+
+    // 小窗隐藏
+    @media screen and (width < 992px) {
+      position: fixed;
+      left: 0;
+      height: 100%;
+      z-index: 100;
+      background-color: #ffffff;
+      &.is-collapse {
         transform: translateX(-65px);
       }
     }
   }
   .layout-body {
+    position: relative;
     display: flex;
     flex-direction: column;
   }

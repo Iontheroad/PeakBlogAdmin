@@ -2,7 +2,7 @@
   <div class="collapse-icon" @click="toggleClick">
     <!-- 展开收起的按钮图标 -->
     <svg
-      :class="{ 'is-active': isCollapse }"
+      :class="{ 'is-active': isCollapseMenu }"
       class="icon"
       viewBox="0 0 1024 1024"
       xmlns="http://www.w3.org/2000/svg"
@@ -19,11 +19,11 @@ import { useAppStore } from "@/store/modules/app";
 import { computed } from "vue";
 
 const appStore = useAppStore();
-const isCollapse = computed(() => appStore.sidebar.isCollapse); // 菜单栏状态
+const isCollapseMenu = computed(() => appStore.isCollapseMenu); // 菜单栏状态
 
 // 点击触发
 function toggleClick() {
-  appStore.toggleSidebar(!isCollapse.value);
+  appStore.toggleSidebar(!isCollapseMenu.value);
 }
 </script>
 

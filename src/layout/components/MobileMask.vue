@@ -1,29 +1,26 @@
 <script setup lang="ts" name="MobileMask">
+import { computed, watch } from "vue";
+import { useRoute } from "vue-router";
 import { useAppStore } from "@/store/modules/app";
-import { computed } from "vue";
-const appStore = useAppStore();
-
-const isCollapse = computed(() => appStore.sidebar.isCollapse);
 import { useResize } from "@/hooks/useResize";
-const { menuResize } = useResize();
-/**
- * 点击空白处，移除遮罩层，并收起菜单
- */
+const appStore = useAppStore();
+const route = useRoute();
+
+const isCollapseMenu = computed(() => appStore.isCollapseMenu);
+const { windowWidth } = useResize();
+const isShow = computed(() => windowWidth.value < 992 && !isCollapseMenu.value);
+watch(route, () => appStore.toggleSidebar(true));
+
 function handleClickOutside() {
   appStore.toggleSidebar(true); // 收起
 }
 </script>
 
 <template>
-  <div
-    v-if="menuResize == 'hidden' && !isCollapse"
-    class="drawer-bg"
-    @click="handleClickOutside"
-  />
+  <div v-if="isShow" class="drawer-bg" @click="handleClickOutside" />
 </template>
 
 <style scoped>
-/* 遮罩层 */
 .drawer-bg {
   position: absolute;
   top: 0;

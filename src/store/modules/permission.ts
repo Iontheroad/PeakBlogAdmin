@@ -34,11 +34,10 @@ export const usePermissionStore = defineStore({
 
     /**
      * 用于添加动态路由=>树形插入动态路由
-     * @param state
-     * @returns
      */
     treeMenuList_getters: (state): Menu.MenuOptions[] =>
       getMenuComponents(state.menuList),
+
     /**
      * 用于添加动态路由=>扁平化添加动态路由
      */

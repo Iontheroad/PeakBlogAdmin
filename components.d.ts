@@ -36,5 +36,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SvgIcon: typeof import('./src/components/SvgIcon/index.vue')['default']
+    SwitchDark: typeof import('./src/components/SwitchDark/index.vue')['default']
   }
 }

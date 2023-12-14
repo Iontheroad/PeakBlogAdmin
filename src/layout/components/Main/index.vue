@@ -8,7 +8,10 @@
   </el-main>
 </template>
 
-<script setup lang="ts" name="Main">
+<script setup lang="ts">
+defineOptions({
+  name: "LayoutMain"
+});
 import { computed } from "vue";
 import { useTabsStore } from "@/store/modules/tabs";
 const tabsStore = useTabsStore();

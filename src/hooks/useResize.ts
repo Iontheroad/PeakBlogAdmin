@@ -11,33 +11,25 @@ export const useResize = () => {
     window.removeEventListener("resize", resize);
   });
 
-  let width = ref<number>();
+  /**
+   * 窗口宽度
+   */
+  let windowWidth = ref<number>(1200);
   /**
    * 菜单栏是否折叠
+   *  默认不折叠
    */
   let isCollapse: Ref<boolean> = ref(false);
 
-  /**
-   * 菜单栏状态
-   */
-  let menuResize = ref<"expand" | "collapse" | "hidden">("expand"); // expand collapse hidden
   function resize() {
-    width.value = document.body.getBoundingClientRect().width;
-    if (width.value >= 1200) {
-      isCollapse.value = false;
-      menuResize.value = "expand";
-    } else if (width.value > 992) {
-      isCollapse.value = true;
-      menuResize.value = "collapse";
-    } else {
-      isCollapse.value = true;
-      menuResize.value = "hidden";
-    }
+    windowWidth.value = document.body.getBoundingClientRect().width;
+    if (windowWidth.value >= 1200) isCollapse.value = false;
+    else if (windowWidth.value > 992) isCollapse.value = true;
+    else isCollapse.value = true; // 小窗下, 菜单栏默认折叠
   }
-  resize();
+  resize(); // 先初始化
   return {
-    width,
-    isCollapse,
-    menuResize
+    windowWidth,
+    isCollapse
   };
 };
