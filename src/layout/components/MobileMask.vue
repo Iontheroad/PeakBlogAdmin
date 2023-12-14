@@ -8,8 +8,9 @@ const route = useRoute();
 
 const isCollapseMenu = computed(() => appStore.isCollapseMenu);
 const { windowWidth } = useResize();
-const isShow = computed(() => windowWidth.value < 992 && !isCollapseMenu.value);
-watch(route, () => appStore.toggleSidebar(true));
+const isShow = computed(() => windowWidth.value < 992 && !isCollapseMenu.value); // 是否显示移动遮罩
+
+watch(route, () => isShow.value && appStore.toggleSidebar(true));
 
 function handleClickOutside() {
   appStore.toggleSidebar(true); // 收起

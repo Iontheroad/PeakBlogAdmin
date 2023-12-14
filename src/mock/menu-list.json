@@ -29,7 +29,7 @@
       "isHidden": true,
       "isLink": false,
       "isFull": false,
-      "isAffix": true,
+      "isAffix": false,
       "isKeepAlive": true,
       "isBreadcrumbHidden": false,
       "isAlwaysShow": false
@@ -46,7 +46,7 @@
       "isHidden": false,
       "isLink": false,
       "isFull": false,
-      "isAffix": true,
+      "isAffix": false,
       "isKeepAlive": true,
       "isBreadcrumbHidden": false,
       "isAlwaysShow": false
@@ -63,7 +63,7 @@
           "isHidden": false,
           "isLink": false,
           "isFull": false,
-          "isAffix": true,
+          "isAffix": false,
           "isKeepAlive": true,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
@@ -80,7 +80,7 @@
           "isHidden": false,
           "isLink": false,
           "isFull": false,
-          "isAffix": true,
+          "isAffix": false,
           "isKeepAlive": true,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
@@ -97,7 +97,7 @@
           "isHidden": false,
           "isLink": false,
           "isFull": false,
-          "isAffix": true,
+          "isAffix": false,
           "isKeepAlive": true,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
@@ -114,7 +114,7 @@
           "isHidden": false,
           "isLink": false,
           "isFull": false,
-          "isAffix": true,
+          "isAffix": false,
           "isKeepAlive": true,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
@@ -131,7 +131,7 @@
           "isHidden": false,
           "isLink": false,
           "isFull": false,
-          "isAffix": true,
+          "isAffix": false,
           "isKeepAlive": true,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
@@ -150,7 +150,7 @@
       "isHidden": false,
       "isLink": false,
       "isFull": false,
-      "isAffix": true,
+      "isAffix": false,
       "isKeepAlive": true,
       "isBreadcrumbHidden": false,
       "isAlwaysShow": false
@@ -168,7 +168,7 @@
           "isHidden": false,
           "isLink": false,
           "isFull": false,
-          "isAffix": true,
+          "isAffix": false,
           "isKeepAlive": true,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
@@ -185,7 +185,7 @@
               "isHidden": false,
               "isLink": false,
               "isFull": false,
-              "isAffix": true,
+              "isAffix": false,
               "isKeepAlive": true,
               "isBreadcrumbHidden": false,
               "isAlwaysShow": false
@@ -203,7 +203,7 @@
               "isHidden": false,
               "isLink": false,
               "isFull": false,
-              "isAffix": true,
+              "isAffix": false,
               "isKeepAlive": true,
               "isBreadcrumbHidden": false,
               "isAlwaysShow": false
@@ -220,7 +220,7 @@
                   "isHidden": false,
                   "isLink": false,
                   "isFull": false,
-                  "isAffix": true,
+                  "isAffix": false,
                   "isKeepAlive": true,
                   "isBreadcrumbHidden": false,
                   "isAlwaysShow": false
@@ -237,7 +237,7 @@
                   "isHidden": false,
                   "isLink": false,
                   "isFull": false,
-                  "isAffix": true,
+                  "isAffix": false,
                   "isKeepAlive": true,
                   "isBreadcrumbHidden": false,
                   "isAlwaysShow": false
@@ -258,7 +258,7 @@
           "isHidden": false,
           "isLink": false,
           "isFull": false,
-          "isAffix": true,
+          "isAffix": false,
           "isKeepAlive": true,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false

@@ -20,6 +20,7 @@
     <el-container class="layout-body">
       <!-- 头部 -->
       <LayoutHeader />
+      <LayoutTabs />
       <!-- 视图区域 -->
       <LayoutMain />
       <LayoutFooter v-if="themeConfig.isShowFooter" />
@@ -32,6 +33,7 @@ import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import LayoutHeader from "@/layout/components/Header/index.vue";
+import LayoutTabs from "@/layout/components/Tabs/index.vue";
 import LayoutMain from "@/layout/components/Main/index.vue";
 import LayoutFooter from "@/layout/components/Footer/index.vue";
 import MobileMask from "@/layout/components/MobileMask.vue";

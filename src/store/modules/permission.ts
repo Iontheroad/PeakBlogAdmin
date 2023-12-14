@@ -33,13 +33,23 @@ export const usePermissionStore = defineStore({
     menubarList_getters: (state): Menu.MenuOptions[] => getShowMenuList(state.menuList),
 
     /**
-     * 用于添加动态路由=>树形插入动态路由
+     * 动态路由有 树形嵌套添加 和 扁平化添加 两种方式:
+     *    目前采用的树形嵌套添加
+     */
+    /**
+     * 树形嵌套路由: 路由结构是嵌套层级,可以在页面中继续进行深层路由页面嵌套;
+     * 用途:
+     *    主要用于添加动态路由=>树形插入动态路由;
+     *    侧边菜单栏渲染;
      */
     treeMenuList_getters: (state): Menu.MenuOptions[] =>
       getMenuComponents(state.menuList),
 
     /**
-     * 用于添加动态路由=>扁平化添加动态路由
+     * 扁平化路由: 每个路由都是同级结构清晰,但是不能路由页面嵌套;
+     * 用途:
+     *    tabs渲染;
+     *    可以用于用于添加动态路由=>扁平化添加动态路由;
      */
     flatMenubarList_getters: (state): Menu.MenuOptions[] =>
       getFlatMenuList(state.menuList)

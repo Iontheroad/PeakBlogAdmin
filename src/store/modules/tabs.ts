@@ -9,18 +9,18 @@ import router from "@/router";
 import { nextTick } from "vue";
 
 // tabsState 类型
-interface TabsState {
+export interface TabsState {
   tabsList: TabsItemType[];
   isReload: boolean;
   keepAliveList: string[];
 }
 
-interface TabsItemType {
+export interface TabsItemType {
   icon: string;
   title: string;
   path: string;
   name: string;
-  close: boolean;
+  isAffix: boolean;
 }
 
 export const useTabsStore = defineStore("tabsStore", {
@@ -38,9 +38,9 @@ export const useTabsStore = defineStore("tabsStore", {
      * @param tabsItem
      */
     addTabs_actions(tabsItem: TabsItemType) {
-      if (this.tabsList.every((item) => item.name != tabsItem.name)) {
+      if (this.tabsList.every((item) => item.path != tabsItem.path)) {
         this.tabsList.push(tabsItem);
-        this.addKeepAliveItem_actions(tabsItem.name);
+        this.addKeepAliveItem_actions(tabsItem.path);
       }
     },
 
@@ -73,7 +73,7 @@ export const useTabsStore = defineStore("tabsStore", {
       // 保留当前项 和 固定项
       let routeNameList: string[] = []; // 记录
       this.tabsList = this.tabsList.filter((item) => {
-        if (item.name == routeName || !item.close) {
+        if (item.name == routeName || !item.isAffix) {
           routeNameList.push(item.name);
           return item;
         }

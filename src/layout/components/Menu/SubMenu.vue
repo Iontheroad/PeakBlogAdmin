@@ -28,7 +28,6 @@
 import { useRouter } from "vue-router";
 import { toRefs } from "vue";
 // 组件
-import SvgIcon from "@/components/SvgIcon/index.vue";
 
 const router = useRouter();
 const props = defineProps<{
