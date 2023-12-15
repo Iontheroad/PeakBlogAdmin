@@ -1,27 +1,29 @@
 <template>
   <div class="tabs-box">
-    <el-tabs
-      :model-value="tabsActive"
-      type="card"
-      @tab-click="tabClick"
-      @tab-remove="tabRemove"
-    >
-      <el-tab-pane
-        v-for="item in tabsList"
-        :key="item.name"
-        :label="item.title"
-        :name="item.name"
-        :closable="!item.isAffix"
+    <div class="tabs-menu">
+      <el-tabs
+        :model-value="tabsActive"
+        type="card"
+        @tab-click="tabClick"
+        @tab-remove="tabRemove"
       >
-        <template #label>
-          <el-icon v-show="item.icon && themeConfig.isShowTabsIcon">
-            <SvgIcon :icon-name="item.icon" />
-          </el-icon>
-          {{ item.title }}
-        </template>
-      </el-tab-pane>
-    </el-tabs>
-    <MoreButton />
+        <el-tab-pane
+          v-for="item in tabsList"
+          :key="item.name"
+          :label="item.title"
+          :name="item.name"
+          :closable="!item.isAffix"
+        >
+          <template #label>
+            <el-icon class="tabs-icon" v-show="item.icon && themeConfig.isShowTabsIcon">
+              <SvgIcon :icon-name="item.icon" />
+            </el-icon>
+            {{ item.title }}
+          </template>
+        </el-tab-pane>
+      </el-tabs>
+      <MoreButton />
+    </div>
   </div>
 </template>
 
@@ -105,41 +107,43 @@ const tabRemove = (routeName: any) => {
 
 <style scoped lang="scss">
 .tabs-box {
-  position: relative;
-  width: 100%;
-  :deep(.el-tabs) {
-    .el-tabs__header {
+  background-color: #ffffff;
+  :deep(.tabs-menu) {
+    position: relative;
+    width: 100%;
+    .el-dropdown {
+      position: absolute;
+      top: 8px;
+      right: 13px;
+    }
+    .tabs-icon {
+      top: 2px;
+      font-size: 15px;
+    }
+    .el-tabs__nav-wrap {
+      position: absolute;
+      width: calc(100% - 110px);
+    }
+    .el-tabs--card > .el-tabs__header {
       box-sizing: border-box;
       height: 40px;
+      padding: 0 10px;
       margin: 0;
-      .el-tabs__nav-wrap {
-        position: absolute;
-        width: calc(100% - 120px);
-        padding: 0 20px;
-        .el-tabs__nav-prev,
-        .el-tabs__nav-next {
-          &:hover {
-            color: var(--el-color-primary);
-          }
-        }
-        .el-tabs__nav {
-          border: none;
-          .el-tabs__item {
-            color: #bcb6b6;
-            border: none;
-            &.is-active {
-              color: var(--el-color-primary);
-              border-bottom: 2px solid var(--el-color-primary);
-            }
-          }
-        }
-      }
     }
-  }
-  .el-dropdown {
-    position: absolute;
-    top: 8px;
-    right: 13px;
+    .el-tabs--card > .el-tabs__header .el-tabs__nav {
+      border: none;
+    }
+    .el-tabs--card > .el-tabs__header .el-tabs__item {
+      color: #cccccc;
+      border: none;
+    }
+    .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
+      color: var(--el-color-primary);
+      border-bottom: 2px solid var(--el-color-primary);
+    }
+    .el-tabs__item .is-icon-close svg {
+      margin-top: 0.5px;
+    }
   }
 }
 </style>

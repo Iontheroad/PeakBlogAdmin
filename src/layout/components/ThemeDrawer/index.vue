@@ -1,5 +1,5 @@
 <template>
-  <el-drawer v-model="drawerVisible" title="布局设置" size="300px">
+  <el-drawer v-model="drawerVisible" append-to-body title="布局设置" size="300px">
     <!-- 全局主题 -->
     <el-divider class="divider" content-position="center">
       <el-icon><ColdDrink /></el-icon>
@@ -12,6 +12,10 @@
         :predefine="colorList"
         @change="changePrimary"
       />
+    </div>
+    <div class="theme-item">
+      <span>暗黑模式</span>
+      <SwitchDark />
     </div>
     <br />
 
@@ -61,7 +65,7 @@ import { ref, computed } from "vue";
 import { useTheme } from "@/hooks/useTheme";
 import { useGlobalStore } from "@/store/index";
 import { DEFAULT_PRIMARY } from "@/config/config";
-// import SwitchDark from "@/components/SwitchDark/index.vue";
+import SwitchDark from "@/components/SwitchDark/index.vue";
 import mittBus from "@/utils/mittBus";
 
 const { initTheme, changePrimary } = useTheme();
@@ -86,6 +90,7 @@ const themeConfig = computed(() => globalStore.themeConfig);
 
 // 打开主题设置
 const drawerVisible = ref(false);
+
 // 监听订阅点击 顶部栏主题设置
 mittBus.on("openThemeDrawer", () => (drawerVisible.value = true));
 </script>

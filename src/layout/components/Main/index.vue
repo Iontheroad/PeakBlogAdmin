@@ -25,7 +25,10 @@ const keepAliveList = computed(() => tabsStore.keepAliveList);
 .main {
   position: relative;
   padding: 10px;
-  background-color: #eef0f3;
+
+  // background-color: #eef0f3;
+
+  background-color: var(--el-bg-color-page);
 
   // display: flex;
   // flex-direction: column;

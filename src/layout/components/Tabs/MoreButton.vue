@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+// import { computed } from "vue";
 import {
   ArrowDown,
   Refresh,
@@ -41,7 +41,7 @@ import {
   CircleClose,
   FolderDelete
 } from "@element-plus/icons-vue";
-import { useGlobalStore } from "@/store/index";
+// import { useGlobalStore } from "@/store/index";
 import { useTabsStore } from "@/store/modules/tabs";
 // import { KeepAliveStore } from "@/stores/modules/keepAlive";
 import { useRoute, useRouter } from "vue-router";
@@ -49,9 +49,9 @@ import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
 const router = useRouter();
 const tabsStore = useTabsStore();
-const globalStore = useGlobalStore();
+// const globalStore = useGlobalStore();
 // const keepAliveStore = KeepAliveStore();
-const themeConfig = computed(() => globalStore.themeConfig);
+// const themeConfig = computed(() => globalStore.themeConfig);
 
 /**
  * 刷新当前页
