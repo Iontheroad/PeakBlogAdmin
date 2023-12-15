@@ -12,7 +12,7 @@
       "isLink": false,
       "isFull": false,
       "isAffix": true,
-      "isKeepAlive": true,
+      "isKeepAlive": false,
       "isBreadcrumbHidden": false,
       "isAlwaysShow": false
     }
@@ -30,7 +30,7 @@
       "isLink": false,
       "isFull": false,
       "isAffix": false,
-      "isKeepAlive": true,
+      "isKeepAlive": false,
       "isBreadcrumbHidden": false,
       "isAlwaysShow": false
     }
@@ -47,7 +47,7 @@
       "isLink": false,
       "isFull": false,
       "isAffix": false,
-      "isKeepAlive": true,
+      "isKeepAlive": false,
       "isBreadcrumbHidden": false,
       "isAlwaysShow": false
     },
@@ -64,7 +64,7 @@
           "isLink": false,
           "isFull": false,
           "isAffix": false,
-          "isKeepAlive": true,
+          "isKeepAlive": false,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
         }
@@ -81,7 +81,7 @@
           "isLink": false,
           "isFull": false,
           "isAffix": false,
-          "isKeepAlive": true,
+          "isKeepAlive": false,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
         }
@@ -98,7 +98,7 @@
           "isLink": false,
           "isFull": false,
           "isAffix": false,
-          "isKeepAlive": true,
+          "isKeepAlive": false,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
         }
@@ -115,7 +115,7 @@
           "isLink": false,
           "isFull": false,
           "isAffix": false,
-          "isKeepAlive": true,
+          "isKeepAlive": false,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
         }
@@ -132,7 +132,7 @@
           "isLink": false,
           "isFull": false,
           "isAffix": false,
-          "isKeepAlive": true,
+          "isKeepAlive": false,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
         }
@@ -151,7 +151,7 @@
       "isLink": false,
       "isFull": false,
       "isAffix": false,
-      "isKeepAlive": true,
+      "isKeepAlive": false,
       "isBreadcrumbHidden": false,
       "isAlwaysShow": false
     },
@@ -169,7 +169,7 @@
           "isLink": false,
           "isFull": false,
           "isAffix": false,
-          "isKeepAlive": true,
+          "isKeepAlive": false,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
         },
@@ -186,7 +186,7 @@
               "isLink": false,
               "isFull": false,
               "isAffix": false,
-              "isKeepAlive": true,
+              "isKeepAlive": false,
               "isBreadcrumbHidden": false,
               "isAlwaysShow": false
             }
@@ -204,7 +204,7 @@
               "isLink": false,
               "isFull": false,
               "isAffix": false,
-              "isKeepAlive": true,
+              "isKeepAlive": false,
               "isBreadcrumbHidden": false,
               "isAlwaysShow": false
             },
@@ -221,7 +221,7 @@
                   "isLink": false,
                   "isFull": false,
                   "isAffix": false,
-                  "isKeepAlive": true,
+                  "isKeepAlive": false,
                   "isBreadcrumbHidden": false,
                   "isAlwaysShow": false
                 }
@@ -238,7 +238,7 @@
                   "isLink": false,
                   "isFull": false,
                   "isAffix": false,
-                  "isKeepAlive": true,
+                  "isKeepAlive": false,
                   "isBreadcrumbHidden": false,
                   "isAlwaysShow": false
                 }
@@ -259,7 +259,7 @@
           "isLink": false,
           "isFull": false,
           "isAffix": false,
-          "isKeepAlive": true,
+          "isKeepAlive": false,
           "isBreadcrumbHidden": false,
           "isAlwaysShow": false
         }

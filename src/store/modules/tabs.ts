@@ -73,7 +73,7 @@ export const useTabsStore = defineStore("tabsStore", {
       // 保留当前项 和 固定项
       let routeNameList: string[] = []; // 记录
       this.tabsList = this.tabsList.filter((item) => {
-        if (item.name == routeName || !item.isAffix) {
+        if (item.name == routeName || item.isAffix) {
           routeNameList.push(item.name);
           return item;
         }
@@ -86,9 +86,9 @@ export const useTabsStore = defineStore("tabsStore", {
      * 刷新当前页tab
      */
     refreshCurrentTab_actions(routeName: string) {
+      this.isReload = false;
+      this.removeKeepAliveItem_actions(routeName);
       setTimeout(() => {
-        this.isReload = false;
-        this.removeKeepAliveItem_actions(routeName);
         nextTick(() => {
           this.isReload = true;
           this.addKeepAliveItem_actions(routeName);
