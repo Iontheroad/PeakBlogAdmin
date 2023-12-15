@@ -27,7 +27,7 @@ const logo = ref<string>(new URL(`@/assets/peak_logo.png`, import.meta.url).href
   width: 100%;
   height: 60px;
   line-height: 60px;
-  background: #2b2f3a;
+  background: var(--el-aside-logo-bg-color);
   text-align: center;
 
   /* 只需给刚进入和离开之后添加动画即可 */
@@ -50,7 +50,7 @@ const logo = ref<string>(new URL(`@/assets/peak_logo.png`, import.meta.url).href
     .to-title {
       display: inline-block;
       margin: 0;
-      color: #ffffff;
+      color: var(--el-aside-logo-text-color);
       font-weight: 600;
       line-height: 50px;
       font-size: 14px;

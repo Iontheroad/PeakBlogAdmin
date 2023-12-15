@@ -3,7 +3,7 @@
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="(item, index) in breadcrumbList" :key="item.path">
         <div
-          :class="{ 'no-to': index === breadcrumbList.length - 1 }"
+          :class="{ 'last-item': index === breadcrumbList.length - 1 }"
           @click="clickBreadcrumb(item, index)"
         >
           <SvgIcon
@@ -63,8 +63,13 @@ const clickBreadcrumb = (item: RouteLocationMatched, index: number) => {
       height: 25px;
       font-size: 14px;
       font-weight: 700;
-      &.no-to {
-        color: #97a8be;
+      color: var(--el-header-text-color);
+      &:hover {
+        color: var(--el-color-primary);
+      }
+      &.last-item,
+      &.last-item:hover {
+        color: var(--el-header-text-color-regular);
         cursor: text;
       }
       .svg-icon {
