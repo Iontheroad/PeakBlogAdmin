@@ -85,26 +85,26 @@
   </el-dialog>
 </template>
 
-<script setup lang="ts" name="systemRoleDialog">
+<script setup lang="ts">
 import { reactive, ref, watch } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
 import { ElMessage } from "element-plus";
 import type { Role } from "./index.vue";
 import { reqInsertRole, reqUpdateRole } from "@/api/role";
 import { useResize } from "@/hooks/useResize";
-const { windowWidth } = useResize();
 
 const props = defineProps<{
   isShowDialog: boolean;
   title: string;
   rowRole?: Role;
 }>();
-// 定义子组件向父组件传值/事件
 const emits = defineEmits<{
   "update:isShowDialog": [value: boolean];
+  selectRoleList: [];
 }>();
 
 // 监听屏幕宽度, 响应式弹窗宽度
+const { windowWidth } = useResize();
 let dialogWidth = ref("769px");
 watch(
   windowWidth,
@@ -155,7 +155,7 @@ watch(
   () => props.isShowDialog,
   (newVal) => {
     if (!newVal) return;
-    roleDialogFormRef.value?.resetFields();
+    roleDialogFormRef.value?.resetFields(); // 先重置表单状态
     if (props.title === "新增角色")
       roleForm.value = {
         role_name: "",
@@ -164,7 +164,7 @@ watch(
         status: 1,
         remark: ""
       };
-    else if (props.title === "修改角色") roleForm.value = { ...props.rowRole } as Role;
+    else if (props.title === "编辑角色") roleForm.value = { ...props.rowRole } as Role;
   }
 );
 
@@ -178,13 +178,14 @@ const onSubmit = (formEl: FormInstance | undefined) => {
   formEl.validate(async (valid) => {
     if (!valid) return;
     try {
-      let result = null;
-      if (props.title === "编辑角色") result = await reqInsertRole(roleForm.value);
-      else if (props.title === "新增角色") result = await reqUpdateRole(roleForm.value);
-      console.log(result);
+      if (props.title === "编辑角色") await reqUpdateRole(roleForm.value);
+      else if (props.title === "新增角色") await reqInsertRole(roleForm.value);
       ElMessage.success(`${props.title}成功`);
     } catch (error) {
       console.log(error);
+    } finally {
+      onClose();
+      emits("selectRoleList");
     }
   });
 };

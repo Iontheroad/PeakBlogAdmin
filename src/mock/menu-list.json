@@ -53,12 +53,12 @@
     },
     "children": [
       {
-        "path": "/system/user",
-        "name": "User",
-        "component": "/system/user/index",
+        "path": "/system/role",
+        "name": "Role",
+        "component": "/system/role/index",
         "meta": {
-          "title": "用户管理",
-          "icon": "menu-system-user",
+          "title": "角色管理",
+          "icon": "menu-system-role",
           "roles": ["admin"],
           "isHidden": false,
           "isLink": false,
@@ -70,12 +70,12 @@
         }
       },
       {
-        "path": "/system/role",
-        "name": "Role",
-        "component": "/system/role/index",
+        "path": "/system/user",
+        "name": "User",
+        "component": "/system/user/index",
         "meta": {
-          "title": "角色管理",
-          "icon": "menu-system-role",
+          "title": "用户管理",
+          "icon": "menu-system-user",
           "roles": ["admin"],
           "isHidden": false,
           "isLink": false,
