@@ -70,7 +70,7 @@ const userStore = useUserStore();
 
 let actionType = ref("login");
 const formData = reactive({
-  username: "胡歌",
+  username: "蒙毅",
   password: "qwe123"
 });
 

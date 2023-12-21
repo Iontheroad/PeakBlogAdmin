@@ -3,14 +3,14 @@
  */
 // import type { AxiosResponse } from "axios";
 import request from "@/utils/request.ts";
-
+const prefix = "/admin";
 /**
  * 用户登录
  * @param data
  */
 export function reqUserLogin(data: { username: string; password: string }) {
   return request({
-    url: "/user/login",
+    url: `${prefix}/user/login`,
     method: "post",
     data
   });
@@ -22,7 +22,7 @@ export function reqUserLogin(data: { username: string; password: string }) {
  */
 export function reqUserLogout() {
   return request({
-    url: "/user/logout",
+    url: `${prefix}/user/logout`,
     method: "post"
   });
 }
@@ -33,7 +33,7 @@ export function reqUserLogout() {
  */
 export function reqUserRegister(data: { username: string; password: string }) {
   return request({
-    url: "/user/register",
+    url: `${prefix}/user/register`,
     method: "post",
     data
   });
@@ -45,7 +45,7 @@ export function reqUserRegister(data: { username: string; password: string }) {
  */
 export function reqUserResetPassword(data: { username: string; password: string }) {
   return request({
-    url: "/user/resetPassword",
+    url: `/user/resetPassword`,
     method: "patch",
     data
   });
@@ -56,7 +56,7 @@ export function reqUserResetPassword(data: { username: string; password: string 
  */
 export function reqRefreshToken(options: any) {
   return request({
-    url: "/refresh/token",
+    url: `/refresh/token`,
     method: "post",
     ...options
   });
