@@ -1,84 +1,113 @@
 <template>
   <el-dialog
+    class="action-dialog"
     :title="title"
     :model-value="isShowDialog"
     :width="dialogWidth"
     @close="onClose"
   >
     <el-form
-      ref="roleDialogFormRef"
-      :model="roleForm"
+      ref="dialogFormRef"
+      :model="userForm"
       :rules="rules"
       size="default"
       label-width="90px"
     >
       <el-row :gutter="35">
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-          <el-form-item prop="role_name" label="角色名称">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="nickname" label="用户昵称">
             <el-input
-              v-model="roleForm.role_name"
-              placeholder="请输入角色名称"
+              v-model="userForm.nickname"
+              placeholder="请输入用户昵称"
               clearable
             ></el-input>
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-          <el-form-item prop="role_key" label="角色标识">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="username" label="用户名">
             <template #label>
-              <el-tooltip
-                effect="dark"
-                content="用于 `router/route.ts` meta.roles"
-                placement="top-start"
-              >
-                <span>角色标识</span>
+              <el-tooltip effect="dark" content="用来登录的账号" placement="top-start">
+                <span>用户名</span>
               </el-tooltip>
             </template>
             <el-input
-              v-model="roleForm.role_key"
-              placeholder="请输入角色标识"
+              v-model="userForm.username"
+              placeholder="请输入用户名"
               clearable
             ></el-input>
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-          <el-form-item prop="role_sort" label="排序">
-            <el-input-number
-              v-model="roleForm.role_sort"
-              :min="0"
-              :max="999"
-              controls-position="right"
-              placeholder="请输入排序"
-              class="w100"
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="avatar" label="头像">
+            <el-upload
+              class="avatar-uploader"
+              action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+              :show-file-list="false"
+            >
+              <img v-if="userForm.avatar" :src="userForm.avatar" class="avatar" />
+              <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            </el-upload>
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="sex" label="性别">
+            <el-radio-group v-model="userForm.sex">
+              <el-radio model-value="u" label="未知"></el-radio>
+              <el-radio model-value="m" label="男" />
+              <el-radio model-value="w" label="女" />
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="age" label="年龄">
+            <el-input
+              v-model.number="userForm.age"
+              controls-position="age"
+              placeholder="请输入地址"
             />
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-          <el-form-item prop="status" label="角色状态">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="address" label="地址">
+            <el-input
+              v-model.trim="userForm.address"
+              controls-position="right"
+              placeholder="请输入地址"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="phone" label="手机号">
+            <el-input v-model.number="userForm.phone" placeholder="请输入电话" />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="email" label="邮箱">
+            <el-input
+              type="email"
+              v-model="userForm.email"
+              controls-position="right"
+              placeholder="请输入地址"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="state" label="用户状态">
             <el-switch
-              v-model="roleForm.status"
+              v-model="userForm.state"
               inline-prompt
               :active-value="1"
               active-text="启"
-              :inactive-value="0"
+              :inactive-value="2"
               inactive-text="禁"
             ></el-switch>
-          </el-form-item>
-        </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
-          <el-form-item prop="remark" label="角色描述">
-            <el-input
-              v-model="roleForm.remark"
-              type="textarea"
-              placeholder="请输入角色描述"
-              maxlength="150"
-            ></el-input>
           </el-form-item>
         </el-col>
       </el-row>
     </el-form>
     <template #footer>
       <el-button size="default" @click="onClose">关 闭</el-button>
-      <el-button type="primary" size="default" @click="onSubmit(roleDialogFormRef)">
+      <el-button type="primary" size="default" @click="onSubmit(dialogFormRef)">
         提交
       </el-button>
     </template>
@@ -88,19 +117,20 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
+import { Plus } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
-import type { Role } from "./index.vue";
-import { reqInsertRole, reqUpdateRole } from "@/api/role";
+// import type { User } from "./index.vue";
+import { reqInsertUser, reqUpdateUser, type AddUser } from "@/api/user";
 import { useResize } from "@/hooks/useResize";
 
 const props = defineProps<{
   isShowDialog: boolean;
   title: string;
-  rowRole?: Role;
+  rowUser?: AddUser;
 }>();
 const emits = defineEmits<{
   "update:isShowDialog": [value: boolean];
-  selectRoleList: [];
+  selectUserList: [];
 }>();
 
 // 监听屏幕宽度, 响应式弹窗宽度
@@ -115,56 +145,38 @@ watch(
   { immediate: true }
 );
 
-const roleDialogFormRef = ref<FormInstance>();
-const roleForm = ref<Role>({
-  role_name: "",
-  role_key: "",
-  role_sort: 1,
-  status: 1, // 1 正常 0 停用
-  remark: ""
-});
-const rules = reactive<FormRules<Role>>({
-  role_name: [
-    { required: true, message: "角色名称不能为空", trigger: ["blur", "change"] }
-  ],
-  role_key: [
+const dialogFormRef = ref<FormInstance>();
+let temp: AddUser = {
+  username: "",
+  nickname: "",
+  avatar: "",
+  sex: "u",
+  age: 0,
+  address: "",
+  phone: "",
+  email: "",
+  state: 1
+}; // 初始化模板
+const userForm = ref<AddUser>({ ...temp });
+const rules = reactive<FormRules<AddUser>>({
+  nickname: [
     {
       required: true,
-      message: "角色权限标识",
+      message: "用户昵称不能为空",
       trigger: "change"
     }
   ],
-  status: [
-    {
-      required: true,
-      message: "角色状态",
-      trigger: "change"
-    }
-  ],
-  role_sort: [
-    {
-      type: "date",
-      required: true,
-      message: "角色排序",
-      trigger: "change"
-    }
-  ]
+  username: [{ required: true, message: "用户名不能为空", trigger: ["blur", "change"] }]
 });
 // 监听弹窗 回显数据
 watch(
   () => props.isShowDialog,
   (newVal) => {
     if (!newVal) return;
-    roleDialogFormRef.value?.resetFields(); // 先重置表单状态
-    if (props.title === "新增角色")
-      roleForm.value = {
-        role_name: "",
-        role_key: "",
-        role_sort: 1,
-        status: 1,
-        remark: ""
-      };
-    else if (props.title === "编辑角色") roleForm.value = { ...props.rowRole } as Role;
+    dialogFormRef.value?.resetFields(); // 先重置表单状态
+    if (props.title === "新增用户") userForm.value = { ...temp };
+    else if (props.title === "编辑用户") userForm.value = { ...props.rowUser } as AddUser;
+    console.log(userForm.value);
   }
 );
 
@@ -178,14 +190,15 @@ const onSubmit = (formEl: FormInstance | undefined) => {
   formEl.validate(async (valid) => {
     if (!valid) return;
     try {
-      if (props.title === "编辑角色") await reqUpdateRole(roleForm.value);
-      else if (props.title === "新增角色") await reqInsertRole(roleForm.value);
+      console.log(userForm.value);
+      if (props.title === "编辑用户") await reqUpdateUser(userForm.value);
+      else if (props.title === "新增用户") await reqInsertUser(userForm.value);
       ElMessage.success(`${props.title}成功`);
     } catch (error) {
       console.log(error);
     } finally {
       onClose();
-      emits("selectRoleList");
+      emits("selectUserList");
     }
   });
 };
@@ -194,4 +207,23 @@ const onSubmit = (formEl: FormInstance | undefined) => {
 defineExpose({});
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+</style>

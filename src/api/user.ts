@@ -63,12 +63,71 @@ export function reqRefreshToken(options: any) {
 }
 
 /**
- * 获取路由菜单集合
- * @returns
+ * 查询用户列表
  */
-export function reqGetMenuListApi() {
+export function reqSelectUserList(params: { username: string; nickname: string }) {
   return request({
-    url: `/user/menus`,
+    url: `${prefix}/user/list`,
+    method: "get",
+    params
+  });
+}
+
+/**
+ * 查询用户
+ */
+export function reqSelectUser() {
+  return request({
+    url: `${prefix}/user`,
     method: "get"
+  });
+}
+
+export interface User {
+  user_id?: number;
+  username: string;
+  nickname: string;
+  avatar?: string;
+  sex: string;
+  age: number;
+  address: string;
+  phone: string;
+  email: string;
+  state: 1 | 2; // 1 正常 2 禁用
+  create_time?: string;
+  update_time?: string;
+  login_time?: string;
+}
+export type AddUser = Omit<User, "create_time" | "update_time" | "login_time">;
+
+/**
+ * 新增用户
+ */
+export function reqInsertUser(data: AddUser) {
+  return request({
+    url: `${prefix}/user`,
+    method: "post",
+    data
+  });
+}
+/**
+ * 修改用户
+ */
+export function reqUpdateUser(data: AddUser) {
+  return request({
+    url: `${prefix}/user`,
+    method: "put",
+    data
+  });
+}
+
+/**
+ * 删除用户
+ */
+export function reqDeleteUser(data: { ids: number[] }) {
+  return request({
+    url: `${prefix}/user`,
+    method: "delete",
+    data
   });
 }

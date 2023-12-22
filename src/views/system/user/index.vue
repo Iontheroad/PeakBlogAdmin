@@ -2,7 +2,7 @@
   <el-card class="user-box">
     <div class="user-search">
       <el-input
-        v-model="tableData.search"
+        v-model="username"
         size="default"
         placeholder="请输入用户名称"
         clearable
@@ -18,141 +18,130 @@
         新增用户
       </el-button>
     </div>
-    <el-table :data="tableData.data" v-loading="tableData.loading" style="width: 100%">
-      <el-table-column type="index" label="序号" width="60" />
-      <el-table-column
-        v-for="column in columns"
-        :key="column.prop"
-        v-bind="column"
-      ></el-table-column>
-      <el-table-column label="操作" width="130">
-        <template #default="{ row }">
-          <el-link
-            type="primary"
-            @click="clickUpdateRole(row)"
-            style="margin-right: 10px"
-          >
-            修改
-          </el-link>
-          <el-link type="danger" @click="clickDeleteRole(row)"> 删除 </el-link>
-        </template>
-      </el-table-column>
-    </el-table>
+
+    <PeakTable
+      :table-data="tables.tableData"
+      :table-columns="tables.tableColumns"
+      :loading="tables.loading"
+    >
+      <template #state="{ row }">
+        <el-tag type="success" v-if="row.state === 1">启用</el-tag>
+        <el-tag type="danger" v-else-if="row.state === 2">禁用</el-tag>
+      </template>
+      <template #action="{ row }">
+        <el-link type="primary" @click="clickUpdate(row)" style="margin-right: 10px">
+          修改
+        </el-link>
+        <el-link type="danger" @click="clickDelete(row)"> 删除 </el-link>
+      </template>
+    </PeakTable>
+
     <ActionDialog
       v-model:is-show-dialog="isShowDialog"
       :title="title"
-      :row-role="rowRole"
-      @select-role-list="selectRoleList"
+      :row-user="rowUser"
+      @select-user-list="selectUserList"
     />
   </el-card>
 </template>
 
-<script setup lang="ts" name="Role">
+<script setup lang="ts" name="User">
 import { reactive, onMounted, ref, watch } from "vue";
 import { ElMessageBox, ElMessage } from "element-plus";
 import { Search, Plus } from "@element-plus/icons-vue";
+import PeakTable from "@/components/PeakTable/index.vue";
 import ActionDialog from "./ActionDialog.vue";
-import { reqSelectRoleList, reqDeleteRole } from "@/api/role";
+import { reqSelectUserList, reqDeleteUser, type User } from "@/api/user";
 
-export interface Role {
-  user_id?: number;
-  username: string;
-  nickname: string;
-  sex: string;
-  age: string;
-  address: string;
-  phone: string;
-  email: string;
-  state: 1 | 0; // 1 正常 2 禁用
-  create_time?: string;
-  update_time?: string;
-}
-
-// TODO: 封装表格,完善用户
-let columns = [
-  {
-    prop: "username",
-    label: "用户名",
-    showOverflowTooltip: true,
-    width: 100
-  },
-  {
-    prop: "nickname",
-    label: "用户昵称",
-    showOverflowTooltip: true
-  },
-  {
-    prop: "sex",
-    label: "性别",
-    showOverflowTooltip: true
-  },
-  {
-    prop: "age",
-    label: "年龄",
-    showOverflowTooltip: true
-  },
-  {
-    prop: "address",
-    label: "地址",
-    showOverflowTooltip: true
-  },
-  {
-    prop: "phone",
-    label: "手机号",
-    showOverflowTooltip: true
-  },
-  {
-    prop: "email",
-    label: "邮箱",
-    showOverflowTooltip: true
-  },
-  {
-    prop: "state",
-    label: "用户状态",
-    showOverflowTooltip: true,
-    slot: "state"
-  },
-  {
-    prop: "create_time",
-    label: "创建时间",
-    showOverflowTooltip: true
-  },
-  {
-    prop: "update_time",
-    label: "更新时间",
-    showOverflowTooltip: true
-  }
-];
-
-// 定义变量内容
-const tableData = reactive({
-  data: [] as Role[],
-  loading: false,
-  search: ""
+const tables = reactive({
+  tableData: [] as User[],
+  tableColumns: [
+    {
+      prop: "username",
+      label: "用户名",
+      showOverflowTooltip: true,
+      width: 100
+    },
+    {
+      prop: "nickname",
+      label: "用户昵称",
+      showOverflowTooltip: true
+    },
+    {
+      prop: "sex",
+      label: "性别",
+      showOverflowTooltip: true,
+      formatter: (row: User) => (row.sex === "m" ? "男" : row.sex === "w" ? "女" : "未知")
+    },
+    {
+      prop: "age",
+      label: "年龄",
+      showOverflowTooltip: true,
+      formatter: (row: User) => row.age + "岁"
+    },
+    {
+      prop: "address",
+      label: "地址",
+      showOverflowTooltip: true
+    },
+    {
+      prop: "phone",
+      label: "手机号",
+      showOverflowTooltip: true
+    },
+    {
+      prop: "email",
+      label: "邮箱",
+      showOverflowTooltip: true
+    },
+    {
+      prop: "state",
+      slot: "state",
+      label: "用户状态",
+      showOverflowTooltip: true
+    },
+    {
+      prop: "create_time",
+      label: "创建时间",
+      showOverflowTooltip: true
+    },
+    {
+      prop: "update_time",
+      label: "更新时间",
+      showOverflowTooltip: true
+    },
+    {
+      label: "操作",
+      prop: "action",
+      slot: "action",
+      width: 150
+    }
+  ],
+  loading: false
 });
 
 // 监听搜索, 空值重新查询
-watch(
-  () => tableData.search,
-  (newVal) => {
-    if (newVal === "") selectRoleList();
-  }
-);
+let username = ref("");
+watch(username, (newVal) => {
+  if (newVal === "") selectUserList();
+});
 /**
  * 查询用户
  */
-async function selectRoleList() {
-  tableData.loading = true;
+async function selectUserList() {
+  tables.loading = true;
   try {
-    let result = await reqSelectRoleList({
-      role_name: tableData.search,
-      sort: ""
+    let result = await reqSelectUserList({
+      username: username.value,
+      nickname: ""
     });
-    tableData.data = result.data;
+    console.log(result);
+
+    tables.tableData = result.data;
   } catch (error) {
     console.log(error);
   } finally {
-    tableData.loading = false;
+    tables.loading = false;
   }
 }
 
@@ -160,7 +149,7 @@ async function selectRoleList() {
  * 点击查询
  */
 const clickSearch = () => {
-  selectRoleList();
+  selectUserList();
 };
 
 let isShowDialog = ref(false);
@@ -172,34 +161,34 @@ const clickInsertRole = () => {
 };
 
 // 编辑用户操作
-let rowRole = ref(); // 要回显的用户
-const clickUpdateRole = (row: Role) => {
+let rowUser = ref<User>(); // 要回显的用户
+const clickUpdate = (row: User) => {
   title.value = "编辑用户";
   isShowDialog.value = true;
-  rowRole.value = row;
+  rowUser.value = row;
 };
 
 // 删除用户
-const clickDeleteRole = (row: Role) => {
+const clickDelete = (row: User) => {
   ElMessageBox.confirm("此操作将永久删除该用户, 是否继续?", "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning"
   }).then(async () => {
     try {
-      await reqDeleteRole({ ids: [row.role_id] });
+      await reqDeleteUser({ ids: [row.user_id!] });
       ElMessage.success("删除成功");
     } catch (error) {
       console.log(error);
     } finally {
-      selectRoleList();
+      selectUserList();
     }
   });
 };
 
 // 页面加载时
 onMounted(() => {
-  selectRoleList();
+  selectUserList();
 });
 </script>
 
