@@ -4,7 +4,15 @@
       <el-input
         v-model="username"
         size="default"
-        placeholder="请输入用户名称"
+        placeholder="请输入用户名"
+        clearable
+        style="max-width: 180px; margin-right: 10px"
+      >
+      </el-input>
+      <el-input
+        v-model="nickname"
+        size="default"
+        placeholder="请输入用户昵称"
         clearable
         style="max-width: 180px; margin-right: 10px"
       >
@@ -15,7 +23,7 @@
       </el-button>
       <el-button size="default" type="primary" @click="clickInsertRole">
         <el-icon><Plus /></el-icon>
-        新增用户
+        新增
       </el-button>
     </div>
 
@@ -122,9 +130,9 @@ const tables = reactive({
 
 // 监听搜索, 空值重新查询
 let username = ref("");
-watch(username, (newVal) => {
-  if (newVal === "") selectUserList();
-});
+let nickname = ref("");
+watch(username, (newVal) => !newVal && selectUserList());
+watch(nickname, (newVal) => !newVal && selectUserList());
 /**
  * 查询用户
  */
@@ -133,7 +141,7 @@ async function selectUserList() {
   try {
     let result = await reqSelectUserList({
       username: username.value,
-      nickname: ""
+      nickname: nickname.value
     });
     console.log(result);
 

@@ -15,6 +15,29 @@
     >
       <el-row :gutter="35">
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="username" label="用户名">
+            <template #label>
+              <el-tooltip effect="dark" content="用来登录的账号" placement="top-start">
+                <span>用户名</span>
+              </el-tooltip>
+            </template>
+            <el-input
+              v-model="userForm.username"
+              placeholder="请输入账号"
+              clearable
+            ></el-input>
+          </el-form-item>
+        </el-col>
+        <!-- <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="password" label="密码">
+            <el-input
+              v-model="userForm.password"
+              placeholder="请输入密码"
+              clearable
+            ></el-input>
+          </el-form-item>
+        </el-col> -->
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-form-item prop="nickname" label="用户昵称">
             <el-input
               v-model="userForm.nickname"
@@ -24,37 +47,11 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-          <el-form-item prop="username" label="用户名">
-            <template #label>
-              <el-tooltip effect="dark" content="用来登录的账号" placement="top-start">
-                <span>用户名</span>
-              </el-tooltip>
-            </template>
-            <el-input
-              v-model="userForm.username"
-              placeholder="请输入用户名"
-              clearable
-            ></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-          <el-form-item prop="avatar" label="头像">
-            <el-upload
-              class="avatar-uploader"
-              action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-              :show-file-list="false"
-            >
-              <img v-if="userForm.avatar" :src="userForm.avatar" class="avatar" />
-              <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-            </el-upload>
-          </el-form-item>
-        </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-form-item prop="sex" label="性别">
             <el-radio-group v-model="userForm.sex">
-              <el-radio model-value="u" label="未知"></el-radio>
-              <el-radio model-value="m" label="男" />
-              <el-radio model-value="w" label="女" />
+              <el-radio label="u">未知</el-radio>
+              <el-radio label="m">男</el-radio>
+              <el-radio label="w">女</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
@@ -101,6 +98,18 @@
               :inactive-value="2"
               inactive-text="禁"
             ></el-switch>
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="avatar" label="头像">
+            <el-upload
+              class="avatar-uploader"
+              action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+              :show-file-list="false"
+            >
+              <img v-if="userForm.avatar" :src="userForm.avatar" class="avatar" />
+              <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            </el-upload>
           </el-form-item>
         </el-col>
       </el-row>
