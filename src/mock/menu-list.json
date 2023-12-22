@@ -18,15 +18,14 @@
     }
   },
   {
-    "path": "tableCheck",
-    "name": "TableCheck",
-    "component": "superTable/tableCheck/index",
+    "path": "/category",
+    "name": "Category",
+    "component": "/category/index",
     "meta": {
-      "title": "表格校验",
+      "title": "分类管理",
       "icon": "menu-table",
       "roles": ["admin"],
-      "activeMenu": "/home",
-      "isHidden": true,
+      "isHidden": false,
       "isLink": false,
       "isFull": false,
       "isAffix": false,
