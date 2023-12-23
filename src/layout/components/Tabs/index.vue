@@ -48,7 +48,7 @@ const tabsActive = computed((): string => route.name as string); // 记录当前
 watch(
   () => route.fullPath,
   () => {
-    if (route.meta.isFull || route.meta.isLink) return;
+    if (route.meta.isFull || route.meta.isLink || route.meta.isHidden) return;
     let tabsItem: TabsItemType = {
       icon: route.meta.icon as string,
       title: route.meta.title as string,

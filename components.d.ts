@@ -35,6 +35,8 @@ declare module 'vue' {
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElPopconfirm: typeof import('element-plus/es')['ElPopconfirm']
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElRow: typeof import('element-plus/es')['ElRow']
@@ -54,6 +56,7 @@ declare module 'vue' {
     SvgIcon: typeof import('./src/components/SvgIcon/index.vue')['default']
     SwitchDark: typeof import('./src/components/SwitchDark/index.vue')['default']
     Table: typeof import('./src/components/Table/index.vue')['default']
+    WangEditor: typeof import('./src/components/WangEditor/index.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

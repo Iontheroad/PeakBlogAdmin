@@ -18,6 +18,39 @@
     }
   },
   {
+    "path": "/article",
+    "name": "Article",
+    "component": "/article/index",
+    "meta": {
+      "title": "文章管理",
+      "icon": "menu-table",
+      "roles": ["admin"],
+      "isHidden": false,
+      "isLink": false,
+      "isFull": false,
+      "isAffix": false,
+      "isKeepAlive": false,
+      "isBreadcrumbHidden": false
+    }
+  },
+  {
+    "path": "/article/read-write",
+    "name": "ArticleRWV",
+    "component": "/article/read-write",
+    "meta": {
+      "title": "",
+      "icon": "menu-table",
+      "roles": ["admin"],
+      "activeMenu": "/article",
+      "isHidden": true,
+      "isLink": false,
+      "isFull": false,
+      "isAffix": false,
+      "isKeepAlive": false,
+      "isBreadcrumbHidden": true
+    }
+  },
+  {
     "path": "/category",
     "name": "Category",
     "component": "/category/index",
@@ -92,40 +125,6 @@
         "meta": {
           "title": "菜单管理",
           "icon": "menu-system-menu",
-          "roles": ["admin"],
-          "isHidden": false,
-          "isLink": false,
-          "isFull": false,
-          "isAffix": false,
-          "isKeepAlive": false,
-          "isBreadcrumbHidden": false,
-          "isAlwaysShow": false
-        }
-      },
-      {
-        "path": "/system/dept",
-        "name": "Dept",
-        "component": "/system/dept/index",
-        "meta": {
-          "title": "部门管理",
-          "icon": "menu-system-tree",
-          "roles": ["admin"],
-          "isHidden": false,
-          "isLink": false,
-          "isFull": false,
-          "isAffix": false,
-          "isKeepAlive": false,
-          "isBreadcrumbHidden": false,
-          "isAlwaysShow": false
-        }
-      },
-      {
-        "path": "/system/dict",
-        "name": "Dict",
-        "component": "/system/dict/index",
-        "meta": {
-          "title": "字典管理",
-          "icon": "menu-system-dict",
           "roles": ["admin"],
           "isHidden": false,
           "isLink": false,
