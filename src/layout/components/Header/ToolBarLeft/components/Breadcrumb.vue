@@ -32,7 +32,7 @@ const breadcrumbList = computed(() => {
   const breadCrumbs = route.matched.filter(
     (item) => item?.meta?.title && !item?.meta?.isBreadcrumbHidden
   );
-  if (breadCrumbs[0].path !== "/home/index") {
+  if (breadCrumbs[0]?.path !== "/home/index") {
     breadCrumbs.unshift({
       path: "/home/index",
       meta: {

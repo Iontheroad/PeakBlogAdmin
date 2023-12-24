@@ -59,7 +59,7 @@
   </el-card>
 </template>
 
-<script setup lang="ts" name="Article">
+<script setup lang="ts">
 import { reactive, onMounted, ref, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox, ElMessage, type TabsPaneContext } from "element-plus";
@@ -196,7 +196,9 @@ let isShowDialog = ref(false);
 let title = ref("");
 // 新增用户操作
 const clickInsertRole = () => {
-  router.push("/article/read-write");
+  router.push({
+    path: "/article/read-write"
+  });
 };
 
 // 编辑用户操作

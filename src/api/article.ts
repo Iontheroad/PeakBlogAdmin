@@ -13,8 +13,8 @@ export interface Article {
   article_cover: string;
   article_type: 1 | 2; // 1原创 2转载
   category_id: string; // 分类id 1,2,3
-  status: 1 | 2 | 3; // 文章状态 1审核中 2通过 3未通过
-  noPass_reason: string;
+  // status: 1 | 2 | 3; // 文章状态 1审核中 2通过 3未通过
+  // noPass_reason: string;
   comment_status: 1 | 2; // 评论状态 1开启 2关闭
   create_by: string;
   create_id: number;
