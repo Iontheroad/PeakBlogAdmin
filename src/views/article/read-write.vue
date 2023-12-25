@@ -6,6 +6,7 @@
       size="default"
       label-width="90px"
       label-suffix=":"
+      :rules="articleFormRules"
     >
       <el-row>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
@@ -35,7 +36,7 @@
             ></el-input>
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-form-item prop="article_cover" label="文章封面">
             <el-input v-model="articleForm.article_cover" placeholder="请输入文章封面" />
           </el-form-item>
@@ -86,53 +87,143 @@
       </el-row>
 
       <el-form-item>
+        <el-button type="primary" @click="dialogVisible = true">预览</el-button>
         <el-button type="primary" @click="submitForm(articleFormRef)">提交</el-button>
         <el-button @click="cancel(articleFormRef)">取消</el-button>
       </el-form-item>
     </el-form>
+    <el-dialog
+      v-model="dialogVisible"
+      :title="articleForm.article_title"
+      width="1300px"
+      top="50px"
+    >
+      <div class="view" v-html="articleForm.article_content"></div>
+    </el-dialog>
   </el-card>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, computed, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { ElMessage } from "element-plus";
 import type { FormInstance } from "element-plus";
 import WangEditor from "@/components/WangEditor/index.vue";
-// TODO: 完善剩余字段
+import { reqSelectCategory, type Category } from "@/api/category";
+import {
+  reqSelectArticle,
+  reqInsertArticle,
+  reqUpdateArticle,
+  type Article
+} from "@/api/article";
+const router = useRouter();
+const route = useRoute();
+
+let dialogVisible = ref(false);
 // TODO: 抽离表单封装组件
 const articleFormRef = ref<FormInstance>();
-const articleForm = reactive({
+const articleForm = reactive<Article.ReqInsertArticle>({
   article_title: "",
   article_digest: "",
   article_cover: "",
   article_type: 1,
   category_id: "",
   comment_status: 1,
-  article_content: "" as string
+  article_content: ""
 });
-const categoryList = [
-  {
-    cate_id: 1,
-    cate_name: "NodeJS"
-  },
-  {
-    cate_id: 2,
-    cate_name: "Vue3"
-  }
-];
+const articleFormRules = {
+  article_title: [{ required: true, message: "文章标题不能为空", trigger: "blur" }],
+  article_digest: [
+    {
+      required: true,
+      message: "文章摘要不能为空",
+      trigger: ["change"]
+    }
+  ],
+  article_type: [
+    {
+      required: true,
+      message: "文章类型不能为空",
+      trigger: "change"
+    }
+  ],
+  category_id: [
+    {
+      required: true,
+      message: "文章分类不能为空",
+      trigger: ["blur"]
+    }
+  ],
+  article_content: [
+    {
+      required: true,
+      message: "文章内容不能为空",
+      trigger: ["change"]
+    }
+  ],
+  comment_status: [
+    {
+      required: true,
+      message: "评论状态不能为空",
+      trigger: ["change"]
+    }
+  ]
+};
+const categoryList = ref<Category[]>([]);
 
+/**
+ * 获取文章分类
+ */
+async function selectCategory() {
+  try {
+    let result = await reqSelectCategory();
+    categoryList.value = result.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const article_id = computed(() => route.query.article_id as unknown as number);
+onMounted(() => {
+  selectCategory();
+  if (article_id.value) selectArticle();
+});
+async function selectArticle() {
+  try {
+    let result = await reqSelectArticle({ article_id: article_id.value });
+    result.data.category_id = result.data.category_id.split(",").map(Number);
+    Object.assign(articleForm, result.data);
+  } catch (error) {
+    console.log(error);
+  }
+}
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  formEl.validate((valid) => {
-    if (!valid) {
-      console.log("error submit!!");
-      return false;
+  formEl.validate(async (valid) => {
+    if (!valid) return ElMessage.warning("请检查表单内容");
+    try {
+      articleForm.category_id = (articleForm.category_id as unknown as number[]).join(
+        ","
+      ); // 转换为字符串
+      let result = null;
+      if (article_id.value) {
+        result = await reqUpdateArticle({ ...articleForm, article_id: article_id.value });
+      } else if (!article_id.value) {
+        result = await reqInsertArticle(articleForm);
+      }
+      if (result?.code == 200) {
+        router.back();
+        ElMessage.success("操作成功");
+      }
+    } catch (error) {
+      console.log(error);
     }
-    console.log("submit!", articleForm);
   });
 };
 const cancel = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.resetFields();
+  router.back();
 };
 </script>
 

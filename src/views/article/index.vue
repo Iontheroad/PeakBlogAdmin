@@ -69,8 +69,7 @@ import {
   reqSelectArticleList,
   reqDeleteArticle,
   // reqArticleReview,
-  type Article,
-  SelectParams
+  type Article
 } from "@/api/article";
 
 const router = useRouter();
@@ -80,7 +79,7 @@ onMounted(() => {
 });
 
 const tables = reactive({
-  tableData: [] as Article[],
+  tableData: [] as Article.ArticleItem[],
   tableColumns: [
     {
       type: "index",
@@ -154,7 +153,7 @@ const tables = reactive({
   ],
   loading: false
 });
-let queryParams = ref<SelectParams>({
+let queryParams = ref<Article.ReqSelectArticleList>({
   currentPage: 1,
   pageSize: 10,
   status: 1
@@ -162,7 +161,7 @@ let queryParams = ref<SelectParams>({
 let { currentPage, pageSize, status } = toRefs(queryParams.value);
 let total = ref(0);
 const clickArticleStatus = (tab: TabsPaneContext) => {
-  status.value = tab.props.name as SelectParams["status"];
+  status.value = tab.props.name as Article.ReqSelectArticleList["status"];
   selectArticleList();
 };
 /**
@@ -193,8 +192,6 @@ const clickSearch = () => {
   selectArticleList();
 };
 
-let isShowDialog = ref(false);
-let title = ref("");
 // 新增用户操作
 const clickInsertRole = () => {
   router.push({
@@ -203,15 +200,19 @@ const clickInsertRole = () => {
 };
 
 // 编辑用户操作
-let rowUser = ref<Article>(); // 要回显的用户
-const clickUpdate = (row: Article) => {
-  title.value = "编辑用户";
-  isShowDialog.value = true;
+let rowUser = ref<Article.ArticleItem>(); // 要回显的用户
+const clickUpdate = (row: Article.ArticleItem) => {
   rowUser.value = row;
+  router.push({
+    path: "/article/read-write",
+    query: {
+      article_id: row.article_id
+    }
+  });
 };
 
 // 删除用户
-const clickDelete = (row: Article) => {
+const clickDelete = (row: Article.ArticleItem) => {
   ElMessageBox.confirm("此操作将永久删除该用户, 是否继续?", "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
