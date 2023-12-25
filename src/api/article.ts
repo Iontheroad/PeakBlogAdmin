@@ -87,9 +87,11 @@ export function reqDeleteArticle(data: { ids: number[] }) {
 /**
  * 文章审核
  */
-export function reqArticleReview(
-  data: Pick<Article, "article_id" | "status"> & Pick<Partial<Article>, "noPass_reason">
-) {
+export function reqArticleReview(data: {
+  article_id: number;
+  status: 1 | 2;
+  noPass_reason?: string;
+}) {
   return request({
     url: `${prefix}/article/review`,
     method: "put",

@@ -64,7 +64,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <el-form-item prop="comment_status" label="评论状态">
             <el-switch
               v-model="articleForm.comment_status"
@@ -84,15 +84,22 @@
           <WangEditor v-model="articleForm.article_content" />
         </el-form-item>
       </el-row>
+
+      <el-form-item>
+        <el-button type="primary" @click="submitForm(articleFormRef)">提交</el-button>
+        <el-button @click="cancel(articleFormRef)">取消</el-button>
+      </el-form-item>
     </el-form>
   </el-card>
 </template>
 
 <script lang="ts" setup>
+import { reactive, ref } from "vue";
+import type { FormInstance } from "element-plus";
+import WangEditor from "@/components/WangEditor/index.vue";
 // TODO: 完善剩余字段
 // TODO: 抽离表单封装组件
-import WangEditor from "@/components/WangEditor/index.vue";
-import { reactive } from "vue";
+const articleFormRef = ref<FormInstance>();
 const articleForm = reactive({
   article_title: "",
   article_digest: "",
@@ -100,7 +107,7 @@ const articleForm = reactive({
   article_type: 1,
   category_id: "",
   comment_status: 1,
-  article_content: ""
+  article_content: "" as string
 });
 const categoryList = [
   {
@@ -112,6 +119,21 @@ const categoryList = [
     cate_name: "Vue3"
   }
 ];
+
+const submitForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  formEl.validate((valid) => {
+    if (!valid) {
+      console.log("error submit!!");
+      return false;
+    }
+    console.log("submit!", articleForm);
+  });
+};
+const cancel = (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  formEl.resetFields();
+};
 </script>
 
 <style lang="scss" scoped></style>

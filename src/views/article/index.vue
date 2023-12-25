@@ -69,7 +69,8 @@ import {
   reqSelectArticleList,
   reqDeleteArticle,
   // reqArticleReview,
-  type Article
+  type Article,
+  SelectParams
 } from "@/api/article";
 
 const router = useRouter();
@@ -153,15 +154,15 @@ const tables = reactive({
   ],
   loading: false
 });
-let queryParams = ref({
+let queryParams = ref<SelectParams>({
   currentPage: 1,
   pageSize: 10,
-  status: 1 as Article["status"]
+  status: 1
 });
 let { currentPage, pageSize, status } = toRefs(queryParams.value);
 let total = ref(0);
 const clickArticleStatus = (tab: TabsPaneContext) => {
-  status.value = tab.props.name as Article["status"];
+  status.value = tab.props.name as SelectParams["status"];
   selectArticleList();
 };
 /**
