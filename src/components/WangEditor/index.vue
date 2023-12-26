@@ -12,6 +12,7 @@
       :default-config="editorConfig"
       :mode="mode"
       @on-created="handleCreated"
+      @on-change="onChange"
     />
   </div>
 </template>
@@ -19,7 +20,7 @@
 defineOptions({
   name: "WangEditor"
 });
-import { onBeforeUnmount,  computed, shallowRef, onMounted } from "vue";
+import { onBeforeUnmount, computed, shallowRef, onMounted } from "vue";
 import { IToolbarConfig, IEditorConfig } from "@wangeditor/editor";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import "@wangeditor/editor/dist/css/style.css"; // 引入 css
@@ -48,6 +49,11 @@ const emits = defineEmits<{
 const editorRef = shallowRef(); // 富文本 DOM 元素
 const handleCreated = (editor: any) => {
   editorRef.value = editor;
+};
+const onChange = (editor: any) => {
+  // emits("update:modelValue",);
+  console.log(editor.getHtml());
+  console.log(editor.getText());
 };
 
 // 内容 HTML

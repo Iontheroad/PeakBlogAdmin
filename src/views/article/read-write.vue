@@ -82,7 +82,8 @@
           label="文章内容"
           style="display: flex; flex-direction: column"
         >
-          <WangEditor v-model="articleForm.article_content" />
+          <!-- <WangEditor v-model="articleForm.article_content" /> -->
+          <MdEditorV3 v-model="articleForm.article_content" />
         </el-form-item>
       </el-row>
 
@@ -106,9 +107,11 @@
 <script lang="ts" setup>
 import { reactive, ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+
 import { ElMessage } from "element-plus";
 import type { FormInstance } from "element-plus";
-import WangEditor from "@/components/WangEditor/index.vue";
+// import WangEditor from "@/components/WangEditor/index.vue";
+import MdEditorV3 from "@/components/WangEditor/index.vue";
 import { reqSelectCategory, type Category } from "@/api/category";
 import {
   reqSelectArticle,
@@ -120,7 +123,6 @@ const router = useRouter();
 const route = useRoute();
 
 let dialogVisible = ref(false);
-// TODO: 抽离表单封装组件
 const articleFormRef = ref<FormInstance>();
 const articleForm = reactive<Article.ReqInsertArticle>({
   article_title: "",
