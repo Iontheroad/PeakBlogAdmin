@@ -77,14 +77,16 @@
             ></el-switch>
           </el-form-item>
         </el-col>
-        <el-form-item
-          prop="article_content"
-          label="文章内容"
-          style="display: flex; flex-direction: column"
-        >
-          <!-- <WangEditor v-model="articleForm.article_content" /> -->
-          <MdEditorV3 v-model="articleForm.article_content" />
-        </el-form-item>
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+          <el-form-item
+            prop="article_content"
+            label="文章内容"
+            style="display: flex; flex-direction: column"
+          >
+            <!-- <WangEditor v-model="articleForm.article_content" /> -->
+            <MdEditorV3 v-model="articleForm.article_content" />
+          </el-form-item>
+        </el-col>
       </el-row>
 
       <el-form-item>
@@ -111,7 +113,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import type { FormInstance } from "element-plus";
 // import WangEditor from "@/components/WangEditor/index.vue";
-import MdEditorV3 from "@/components/WangEditor/index.vue";
+import MdEditorV3 from "@/components/MdEditorV3/index.vue";
 import { reqSelectCategory, type Category } from "@/api/category";
 import {
   reqSelectArticle,
