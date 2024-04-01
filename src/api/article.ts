@@ -1,7 +1,7 @@
 /**
  * @name 文章api
  */
-import { ReqPage, ResResult } from "./interface";
+import { ReqPage, ResResult, ResResultData } from "./interface";
 import request from "@/utils/request";
 const prefix = "/admin";
 
@@ -13,7 +13,8 @@ export namespace Article {
     article_content: string;
     article_cover: string;
     article_type: 1 | 2; // 1原创 2转载
-    category_id: string; // 分类id 1,2,3
+    article_cateList: Array<{ cate_id: number; cate_name: string }>;
+    category_ids: number[]; // 分类id
     status: 1 | 2 | 3; // 文章状态 1审核中 2通过 3未通过
     noPass_reason?: string; // 未通过原因
     comment_status: 1 | 2; // 评论状态 1开启 2关闭
@@ -38,7 +39,7 @@ export namespace Article {
     | "article_cover"
     | "article_content"
     | "article_type"
-    | "category_id"
+    | "category_ids"
     | "comment_status"
   >;
 
@@ -70,7 +71,9 @@ export function reqSelectArticleList(
 /**
  * 获取指定文章
  */
-export function reqSelectArticle(params: { article_id: number }) {
+export function reqSelectArticle(params: {
+  article_id: number;
+}): Promise<ResResultData<Article.ArticleItem>> {
   return request({
     url: `${prefix}/article/${params.article_id}`,
     method: "get"

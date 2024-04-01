@@ -27,6 +27,7 @@
       :table-data="tables.tableData"
       :table-columns="tables.tableColumns"
       :loading="tables.loading"
+      border
     >
       <template #article_type="{ row }">
         <el-tag type="info" v-if="row.article_type === 1">原创</el-tag>
@@ -40,6 +41,15 @@
       <template #comment_status="{ row }">
         <el-tag type="success" v-if="row.comment_status === 1">开启</el-tag>
         <el-tag type="danger" v-else-if="row.comment_status === 2">关闭</el-tag>
+      </template>
+      <template #article_cateList="{ row }">
+        <el-tag
+          type="success"
+          size="small"
+          v-for="item in row.article_cateList"
+          :key="item.cate_id"
+          >{{ item.cate_name }}
+        </el-tag>
       </template>
       <template #action="{ row }">
         <el-link type="primary" @click="clickUpdate(row)" style="margin-right: 10px">
@@ -118,7 +128,8 @@ const tables = reactive({
       label: "评论状态"
     },
     {
-      prop: "category_id",
+      prop: "article_cateList",
+      slot: "article_cateList",
       label: "文章分类",
       showOverflowTooltip: true
     },

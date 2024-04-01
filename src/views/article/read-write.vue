@@ -52,7 +52,7 @@
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-form-item prop="category_id" label="文章分类">
             <el-select
-              v-model="articleForm.category_id"
+              v-model="articleForm.category_ids"
               multiple
               placeholder="请选择文章分类"
             >
@@ -131,7 +131,7 @@ const articleForm = reactive<Article.ReqInsertArticle>({
   article_digest: "",
   article_cover: "",
   article_type: 1,
-  category_id: "",
+  category_ids: [],
   comment_status: 1,
   article_content: ""
 });
@@ -192,10 +192,11 @@ onMounted(() => {
   selectCategory();
   if (article_id.value) selectArticle();
 });
+// 获取文章
 async function selectArticle() {
   try {
     let result = await reqSelectArticle({ article_id: article_id.value });
-    result.data.category_id = result.data.category_id.split(",").map(Number);
+    result.data.category_ids = result.data.article_cateList?.map((item) => item.cate_id);
     Object.assign(articleForm, result.data);
   } catch (error) {
     console.log(error);
@@ -206,9 +207,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate(async (valid) => {
     if (!valid) return ElMessage.warning("请检查表单内容");
     try {
-      articleForm.category_id = (articleForm.category_id as unknown as number[]).join(
-        ","
-      ); // 转换为字符串
       let result = null;
       if (article_id.value) {
         result = await reqUpdateArticle({ ...articleForm, article_id: article_id.value });
