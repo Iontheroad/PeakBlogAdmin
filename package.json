@@ -54,6 +54,7 @@
     "typescript": "^5.3.2",
     "unplugin-auto-import": "^0.16.7",
     "unplugin-vue-components": "^0.25.2",
+    "unplugin-vue-setup-extend-plus": "^1.0.1",
     "vite": "^5.0.0",
     "vite-plugin-svg-icons": "^2.0.1",
     "vue-eslint-parser": "^9.3.2",
