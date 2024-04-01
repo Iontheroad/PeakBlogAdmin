@@ -10,6 +10,7 @@
           :router="false"
           :default-active="activeMenu"
           :collapse="isCollapseMenu"
+          :unique-opened="false"
           :collapse-transition="false"
         >
           <SubMenu :menu-list="permissionStore.menubarList_getters" />
@@ -56,11 +57,9 @@ const themeConfig = computed(() => globalStore.themeConfig);
 const { windowWidth, isCollapse } = useResize();
 watch(windowWidth, () => appStore.toggleSidebar(isCollapse.value), { immediate: true });
 
-const activeMenu = computed<string>(() => {
-  const { meta, path } = route;
-  if (meta?.activeMenu) return meta.activeMenu as string;
-  return path;
-});
+const activeMenu = computed<string>(
+  () => (route?.meta?.activeMenu as string) || (route.path as string)
+);
 </script>
 
 <style lang="scss">

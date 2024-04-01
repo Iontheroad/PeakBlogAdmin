@@ -229,10 +229,11 @@
                 "name": "Menu122",
                 "component": "/nested/menu1/menu12/menu122/index",
                 "meta": {
+                  "activeMenu": "/nested/menu2",
                   "title": "menu122",
                   "icon": "menu-multi-menu",
                   "roles": ["admin"],
-                  "isHidden": false,
+                  "isHidden": true,
                   "isLink": false,
                   "isFull": false,
                   "isAffix": false,
