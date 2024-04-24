@@ -50,17 +50,27 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-          <el-form-item prop="category_id" label="文章分类">
-            <el-select
-              v-model="articleForm.category_ids"
-              multiple
-              placeholder="请选择文章分类"
-            >
+          <el-form-item prop="cate_id" label="文章分类">
+            <el-select v-model="articleForm.cate_id" placeholder="请选择文章分类">
               <el-option
                 v-for="item in categoryList"
                 :key="item.cate_id"
                 :label="item.cate_name"
                 :value="item.cate_id"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="tag_ids" label="文章标签">
+            <el-select
+              v-model="articleForm.tag_ids"
+              multiple
+              placeholder="请选择文章标签"
+            >
+              <el-option
+                v-for="item in tagList"
+                :key="item.tag_id"
+                :label="item.tag_name"
+                :value="item.tag_id"
               ></el-option>
             </el-select>
           </el-form-item>
@@ -109,12 +119,11 @@
 <script lang="ts" setup>
 import { reactive, ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
-import { ElMessage } from "element-plus";
-import type { FormInstance } from "element-plus";
+import { ElMessage, type FormInstance } from "element-plus";
 // import WangEditor from "@/components/WangEditor/index.vue";
 import MdEditorV3 from "@/components/MdEditorV3/index.vue";
 import { reqSelectCategory, type Category } from "@/api/category";
+import { reqSelectTags, type Tags } from "@/api/tags";
 import {
   reqSelectArticle,
   reqInsertArticle,
@@ -126,15 +135,7 @@ const route = useRoute();
 
 let dialogVisible = ref(false);
 const articleFormRef = ref<FormInstance>();
-const articleForm = reactive<Article.ReqInsertArticle>({
-  article_title: "",
-  article_digest: "",
-  article_cover: "",
-  article_type: 1,
-  category_ids: [],
-  comment_status: 1,
-  article_content: ""
-});
+
 const articleFormRules = {
   article_title: [{ required: true, message: "文章标题不能为空", trigger: "blur" }],
   article_digest: [
@@ -151,10 +152,17 @@ const articleFormRules = {
       trigger: "change"
     }
   ],
-  category_id: [
+  cate_id: [
     {
       required: true,
       message: "文章分类不能为空",
+      trigger: ["blur"]
+    }
+  ],
+  tag_ids: [
+    {
+      required: true,
+      message: "文章标签不能为空",
       trigger: ["blur"]
     }
   ],
@@ -174,7 +182,6 @@ const articleFormRules = {
   ]
 };
 const categoryList = ref<Category[]>([]);
-
 /**
  * 获取文章分类
  */
@@ -187,17 +194,42 @@ async function selectCategory() {
   }
 }
 
-const article_id = computed(() => route.query.article_id as unknown as number);
+const tagList = ref<Tags[]>([]);
+/**
+ * 获取文章标签
+ */
+async function selectTags() {
+  try {
+    let result = await reqSelectTags();
+    tagList.value = result.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const article_id = computed(() => route.params.article_id as unknown as number);
 onMounted(() => {
   selectCategory();
+  selectTags();
   if (article_id.value) selectArticle();
+});
+
+const articleForm = reactive<Article.ReqInsertArticle>({
+  article_title: "",
+  article_digest: "",
+  article_cover: "",
+  article_type: 1,
+  tag_ids: [],
+  cate_id: undefined,
+  comment_status: 1,
+  article_content: ""
 });
 // 获取文章
 async function selectArticle() {
   try {
     let result = await reqSelectArticle({ article_id: article_id.value });
-    result.data.category_ids = result.data.article_cateList?.map((item) => item.cate_id);
-    Object.assign(articleForm, result.data);
+    const tag_ids = result.data?.tags.map((item) => item.tag_id);
+    Object.assign(articleForm, result.data, { tag_ids });
   } catch (error) {
     console.log(error);
   }

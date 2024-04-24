@@ -1,9 +1,9 @@
 /**
- * @name 分类标签api
+ * @name 分类api
  */
 
 import request from "@/utils/request";
-const prefix = "/admin";
+const prefix = "/blog";
 
 export interface Category {
   cate_id: number;

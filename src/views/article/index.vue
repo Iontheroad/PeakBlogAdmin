@@ -42,13 +42,12 @@
         <el-tag type="success" v-if="row.comment_status === 1">开启</el-tag>
         <el-tag type="danger" v-else-if="row.comment_status === 2">关闭</el-tag>
       </template>
-      <template #article_cateList="{ row }">
-        <el-tag
-          type="success"
-          size="small"
-          v-for="item in row.article_cateList"
-          :key="item.cate_id"
-          >{{ item.cate_name }}
+      <template #category="{ row }">
+        <el-tag type="success" size="small">{{ row.category.cate_name }} </el-tag>
+      </template>
+      <template #tags="{ row }">
+        <el-tag type="success" size="small" v-for="item in row.tags" :key="item.tag_id">
+          {{ item.tag_name }}
         </el-tag>
       </template>
       <template #action="{ row }">
@@ -128,9 +127,15 @@ const tables = reactive({
       label: "评论状态"
     },
     {
-      prop: "article_cateList",
-      slot: "article_cateList",
+      prop: "category",
+      slot: "category",
       label: "文章分类",
+      showOverflowTooltip: true
+    },
+    {
+      prop: "tags",
+      slot: "tags",
+      label: "文章标签",
       showOverflowTooltip: true
     },
     {
@@ -145,7 +150,6 @@ const tables = reactive({
     },
     {
       prop: "update_by",
-      slot: "state",
       label: "更新人",
       showOverflowTooltip: true
     },
@@ -167,7 +171,8 @@ const tables = reactive({
 let queryParams = ref<Article.ReqSelectArticleList>({
   currentPage: 1,
   pageSize: 10,
-  status: 1
+  status: 1,
+  tag_ids: ""
 });
 let { currentPage, pageSize, status } = toRefs(queryParams.value);
 let total = ref(0);
@@ -176,16 +181,12 @@ const clickArticleStatus = (tab: TabsPaneContext) => {
   selectArticleList();
 };
 /**
- * 查询文章
+ * @description 查询文章
  */
 async function selectArticleList() {
   tables.loading = true;
   try {
-    let result = await reqSelectArticleList({
-      currentPage: 1,
-      pageSize: 10,
-      status: status.value
-    });
+    let result = await reqSelectArticleList(queryParams.value);
 
     tables.tableData = result.data;
     total.value = result?.total;
@@ -197,7 +198,7 @@ async function selectArticleList() {
 }
 
 /**
- * 点击查询
+ * @description 点击查询
  */
 const clickSearch = () => {
   selectArticleList();
@@ -215,8 +216,9 @@ let rowUser = ref<Article.ArticleItem>(); // 要回显的用户
 const clickUpdate = (row: Article.ArticleItem) => {
   rowUser.value = row;
   router.push({
-    path: "/article/read-write",
-    query: {
+    name: "ArticleRW",
+    // path: "/article/read-write",
+    params: {
       article_id: row.article_id
     }
   });

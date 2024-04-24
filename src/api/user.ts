@@ -3,7 +3,7 @@
  */
 // import type { AxiosResponse } from "axios";
 import request from "@/utils/request.ts";
-const prefix = "/admin";
+const prefix = "/blog";
 /**
  * 用户登录
  * @param data
