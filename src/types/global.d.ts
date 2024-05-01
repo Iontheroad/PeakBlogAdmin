@@ -41,3 +41,4 @@ declare namespace Menu {
     isAlwaysShow?: boolean;
   }
 }
+declare module "@wangeditor/editor-for-vue";

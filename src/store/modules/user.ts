@@ -7,7 +7,13 @@ import type { PersistedStateOptions } from "pinia-plugin-persistedstate";
 interface UserProps {
   access_token: string;
   refresh_token: string;
-  userInfo?: object;
+  userInfo?: {
+    avatar: string;
+    nickname: string;
+    perms: string[];
+    roles: string[];
+    userId: string;
+  };
 }
 
 export const useUserStore = defineStore({

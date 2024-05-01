@@ -6,7 +6,7 @@
     </div>
     <template #dropdown>
       <!-- 点击下拉 -->
-      <el-dropdown-menu slot="dropdown" class="user-dropdown">
+      <el-dropdown-menu class="user-dropdown">
         <!-- 回首页 -->
         <router-link to="/">
           <el-dropdown-item>Home</el-dropdown-item>
@@ -20,7 +20,7 @@
           <el-dropdown-item>Gitee</el-dropdown-item>
         </a>
         <!-- 退出登录 -->
-        <el-dropdown-item divided @click.native="click_logout">
+        <el-dropdown-item divided @click="click_logout">
           <span style="display: block">Log Out</span>
         </el-dropdown-item>
       </el-dropdown-menu>
@@ -49,7 +49,7 @@ function click_logout() {
   })
     .then(async () => {
       try {
-        await userStore.logout_actions();
+        await userStore.resetUser();
         ElMessage.success({
           showClose: true,
           message: "退出成功"
