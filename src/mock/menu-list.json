@@ -85,6 +85,23 @@
     }
   },
   {
+    "path": "/blogroll",
+    "name": "Blogroll",
+    "component": "/blogroll/index",
+    "meta": {
+      "title": "友情管理",
+      "icon": "menu-table",
+      "roles": ["admin"],
+      "isHidden": false,
+      "isLink": false,
+      "isFull": false,
+      "isAffix": false,
+      "isKeepAlive": false,
+      "isBreadcrumbHidden": false,
+      "isAlwaysShow": false
+    }
+  },
+  {
     "path": "/system",
     "name": "System",
     "redirect": "/system/user",

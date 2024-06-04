@@ -237,7 +237,10 @@ async function selectArticle() {
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate(async (valid) => {
-    if (!valid) return ElMessage.warning("请检查表单内容");
+    if (!valid) {
+      ElMessage.warning("请检查表单内容");
+      return;
+    }
     try {
       let result = null;
       if (article_id.value) {

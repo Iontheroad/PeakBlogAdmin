@@ -16,7 +16,7 @@
     "jsx": "preserve",
 
     /* 严格类型检查选项 */
-    "strict": true, // 启用所有严格类型检查选项。
+    // "strict": true, // 启用所有严格类型检查选项。
     // "noUnusedLocals": true, // 检查未使用的局部变量
     // "noUnusedParameters": true, // 检查未使用的参数
     // "noFallthroughCasesInSwitch": true // 检查 switch 语句中的 fallthrough

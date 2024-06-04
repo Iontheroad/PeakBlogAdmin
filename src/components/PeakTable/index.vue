@@ -1,17 +1,17 @@
 <template>
-  <div class="peak-table">
-    <el-table :data="tableData" v-loading="loading" style="width: 100%" v-bind="$attrs">
-      <el-table-column v-for="item in tableColumns" :key="item.prop" v-bind="item">
-        <template v-if="item.slotHeader" #header="{ column }">
-          <slot name="header" v-bind="column"></slot>
-        </template>
+  <el-table :data="tableData" v-loading="loading" style="width: 100%" v-bind="$attrs">
+    <el-table-column v-for="item in tableColumns" :key="item.prop" v-bind="item">
+      <template v-if="item.slotHeader" #header="{ column }">
+        <slot name="header" v-bind="column"></slot>
+      </template>
 
-        <template #default="scope">
-          <slot v-if="item.slot" :name="item.slot" v-bind="scope"></slot>
-        </template>
-      </el-table-column>
-    </el-table>
-  </div>
+      <template #default="scope">
+        <slot v-if="item.prop" :name="item.prop" v-bind="scope">{{
+          scope.row[item.prop]
+        }}</slot>
+      </template>
+    </el-table-column>
+  </el-table>
 </template>
 
 <script lang="ts" setup>
