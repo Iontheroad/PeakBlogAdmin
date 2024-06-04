@@ -48,10 +48,10 @@
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-form-item prop="sex" label="性别">
-            <el-radio-group v-model="userForm.sex">
-              <el-radio label="u">未知</el-radio>
-              <el-radio label="m">男</el-radio>
-              <el-radio label="w">女</el-radio>
+            <el-radio-group :model-value="userForm.sex">
+              <el-radio value="u">未知</el-radio>
+              <el-radio value="m">男</el-radio>
+              <el-radio value="w">女</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
@@ -102,6 +102,7 @@
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-form-item prop="avatar" label="头像">
+            <!-- FIXME:头像上传待完善 -->
             <el-upload
               class="avatar-uploader"
               action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
@@ -218,12 +219,18 @@ defineExpose({});
 
 <style lang="scss">
 .avatar-uploader .el-upload {
+  width: 178px;
+  height: 178px;
   border: 1px dashed var(--el-border-color);
   border-radius: 6px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: var(--el-transition-duration-fast);
+  .avatar {
+    width: 100%;
+    height: 100%;
+  }
 }
 .avatar-uploader .el-upload:hover {
   border-color: var(--el-color-primary);
