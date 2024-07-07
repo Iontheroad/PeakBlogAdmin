@@ -16,18 +16,19 @@
     "lint:stylelint": "stylelint --cache --fix \"**/*.{vue,less,postcss,css,scss}\" --cache --cache-location node_modules/.cache/stylelint/"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.1.0",
+    "@element-plus/icons-vue": "^2.3.1",
+    "@vitejs/plugin-vue-jsx": "^4.0.0",
     "@vueuse/core": "^10.7.0",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.6.2",
-    "element-plus": "^2.7.4",
+    "element-plus": "^2.7.6",
     "md-editor-v3": "^4.9.0",
     "mitt": "^3.0.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
-    "vue": "^3.3.8",
+    "vue": "^3.4.30",
     "vue-i18n": "^9.8.0",
     "vue-router": "^4.2.5"
   },
@@ -45,19 +46,19 @@
     "postcss-html": "^1.5.0",
     "prettier": "^3.1.0",
     "sass": "^1.69.5",
-    "stylelint": "^15.11.0",
+    "stylelint": "^16.6.1",
     "stylelint-config-html": "^1.1.0",
-    "stylelint-config-recommended-scss": "^13.1.0",
+    "stylelint-config-recommended-scss": "^14.0.0",
     "stylelint-config-recommended-vue": "^1.5.0",
-    "stylelint-config-standard": "^34.0.0",
-    "stylelint-config-standard-scss": "^11.1.0",
-    "typescript": "^5.3.2",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-config-standard-scss": "^13.1.0",
+    "typescript": "^5.5.3",
     "unplugin-auto-import": "^0.16.7",
     "unplugin-vue-components": "^0.25.2",
     "unplugin-vue-setup-extend-plus": "^1.0.1",
     "vite": "^5.0.0",
     "vite-plugin-svg-icons": "^2.0.1",
     "vue-eslint-parser": "^9.3.2",
-    "vue-tsc": "^1.8.22"
+    "vue-tsc": "^2.0.26"
   }
 }
