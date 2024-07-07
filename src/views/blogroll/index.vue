@@ -16,32 +16,26 @@
     </div>
     <!-- 表格 -->
     <div class="main-table">
-      <PeakTable
-        :table-data="tables.tableData"
-        :table-columns="tables.tableColumns"
-        :loading="tables.loading"
+      <PeakConfigTable
+        :data="tables.tableData"
+        :table-columns="tableColumns"
+        v-loading="tables.loading"
         @selection-change="handleSelectionChange"
       >
+        <template #site_url="{ row }">
+          <el-link :href="row.site_url" type="success">{{ row.site_url }}</el-link>
+        </template>
         <template #site_icon="{ row }">
-          <div>
-            <el-image
-              style="width: 100px; height: 100px"
-              :src="row.site_icon"
-              :zoom-rate="1.2"
-              :max-scale="7"
-              :min-scale="0.2"
-              :preview-src-list="[row.site_icon]"
-              :initial-index="0"
-              fit="cover"
-              :z-index="9999999999"
-            />
-            <!-- <el-image
-              :src="row.site_icon"
-              :preview-src-list="[row.site_icon]"
-              :z-index="9999999999"
-              :initial-index="0"
-            ></el-image> -->
-          </div>
+          <el-image
+            :src="row.site_icon"
+            :preview-src-list="[row.site_icon]"
+            :zoom-rate="1.2"
+            :max-scale="7"
+            :min-scale="0.2"
+            :initial-index="0"
+            :preview-teleported="true"
+            fit="cover"
+          />
         </template>
         <template #is_active="{ row }">
           <!-- <el-switch
@@ -71,14 +65,17 @@
             </template>
           </el-popconfirm>
         </template>
-      </PeakTable>
+      </PeakConfigTable>
     </div>
 
     <!--添加  -->
-    <el-dialog :model-value="dialogVisible" title="申请友链" style="border-radius: 10px">
+    <el-dialog
+      v-model="dialogVisible"
+      title="申请友链"
+      style="border-radius: 10px; max-width: 600px"
+    >
       <el-form
         ref="ruleFormRef"
-        style="max-width: 600px"
         :model="ruleForm"
         :rules="rules"
         label-width="auto"
@@ -129,9 +126,10 @@
 <script lang="ts" setup name="TableOneRowCheck">
 import { reactive, ref, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import PeakTable from "@/components/PeakTable/index.vue";
+import PeakConfigTable from "@/components/PeakConfigTable/index.vue";
 import { CirclePlus, Delete } from "@element-plus/icons-vue";
 import type { FormInstance } from "element-plus";
+// import ImageViewer from "@element-plus/components/image-viewer";
 import {
   reqSelectBlogroll,
   reqInsertBlogroll,
@@ -143,61 +141,68 @@ import {
 onMounted(() => {
   selectBlogroll();
 });
+const tableColumns = [
+  {
+    type: "selection",
+    label: "序号",
+    width: 60
+  },
+  {
+    prop: "site_name",
+    label: "网站名称",
+    width: "100px"
+  },
+  {
+    prop: "site_url",
+    label: "网站链接",
+    showOverflowTooltip: true as any,
+    width: "220px"
+  },
+  {
+    prop: "site_icon",
+    label: "网站图标",
+    width: "140px"
+  },
+  {
+    prop: "description",
+    label: "网站描述",
+    minWidth: "200px"
+    // formatter: (row) => (row.article_type == 1 ? "原创" : "转载")
+  },
+  {
+    prop: "email",
+    label: "邮箱",
+    width: "120px"
+  },
+  {
+    prop: "is_active",
+    label: "友链状态",
+    width: "100px"
+  },
+  {
+    prop: "create_time",
+    label: "创建时间",
+    width: "180px"
+  },
+  {
+    prop: "update_time",
+    label: "更新时间",
+    width: "180px"
+  },
+  {
+    label: "操作",
+    prop: "action",
+    width: 120,
+    fixed: "right"
+  }
+];
 const tables = reactive({
-  tableData: [] as Blogroll.BlogrollItem[],
-  tableColumns: [
-    {
-      type: "selection",
-      label: "序号",
-      width: 60
-    },
-    {
-      prop: "site_name",
-      label: "网站名称",
-      showOverflowTooltip: true
-    },
-    {
-      prop: "site_url",
-      label: "网站链接",
-      showOverflowTooltip: true
-    },
-    {
-      prop: "site_icon",
-      label: "网站图标",
-      showOverflowTooltip: true
-    },
-    {
-      prop: "description",
-      label: "网站描述"
-      // formatter: (row) => (row.article_type == 1 ? "原创" : "转载")
-    },
-    {
-      prop: "email",
-      label: "邮箱"
-    },
-    {
-      prop: "is_active",
-      label: "友链状态"
-    },
-    {
-      prop: "create_time",
-      label: "创建时间",
-      showOverflowTooltip: true
-    },
-    {
-      prop: "update_time",
-      label: "更新时间",
-      showOverflowTooltip: true
-    },
-    {
-      label: "操作",
-      prop: "action",
-      width: 120
-      // fixed: "right"
-    }
-  ],
+  tableData: [],
   loading: false
-});
+}) as {
+  tableData: Blogroll.BlogrollItem[];
+  loading: boolean;
+};
 /**
  * 查询
  */
