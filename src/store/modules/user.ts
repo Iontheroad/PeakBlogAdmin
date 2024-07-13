@@ -3,7 +3,8 @@
  */
 import { defineStore } from "pinia";
 import type { PersistedStateOptions } from "pinia-plugin-persistedstate";
-
+import { useTabsStore } from "./tabs";
+import { reqSelectUser } from "@/api/user";
 interface UserProps {
   access_token: string;
   refresh_token: string;
@@ -36,19 +37,29 @@ export const useUserStore = defineStore({
     },
 
     /**
+     * 登录成功后 获取用户信息
+     * @returns
+     */
+    async getUserInfo() {
+      try {
+        let result = await reqSelectUser();
+        this.userInfo = result.data;
+        return Promise.resolve(true);
+      } catch (error) {
+        return Promise.reject(false);
+      }
+    },
+
+    /**
      * 重置用户数据
      */
     resetUser() {
       // 重置数据
       this.access_token = "";
       this.refresh_token = "";
-      this.userInfo = {
-        avatar: "", // 头像
-        nickname: "", // 昵称
-        perms: [], //权限字段
-        roles: [], // 角色
-        userId: "" // 用户id
-      };
+      this.userInfo = {};
+      const tabsStore = useTabsStore();
+      tabsStore.resetTabs_actions(); // 清空缓存的tabs和路由
     }
   },
   getters: {},

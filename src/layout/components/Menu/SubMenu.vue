@@ -37,7 +37,7 @@ const handleClickMenu = (item: Menu.MenuOptions) => {
   router.push(item.path);
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .el-sub-menu {
   .el-sub-menu__title:hover {
     color: var(--el-menu-hover-text-color);

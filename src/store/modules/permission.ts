@@ -3,8 +3,10 @@
  *     通过用户的角色信息拿到最终的 异步路由菜单
  */
 import { defineStore } from "pinia";
-import mockMenuList from "@/mock/menu-list.json";
+import { reqGetMenuTree, reqGetRouters } from "@/api/menu";
+// import { menuList } from "@/mocks/data/menu";
 const modules = import.meta.glob("@/views/**/*.vue");
+
 export const usePermissionStore = defineStore({
   id: "peak-permission",
   state: () => ({
@@ -18,8 +20,9 @@ export const usePermissionStore = defineStore({
      */
     async getListRoutes_action() {
       try {
-        this.menuList = mockMenuList;
-
+        let result = await reqGetRouters();
+        this.menuList = result.data;
+        // this.menuList = menuList;
         return Promise.resolve(this.menuList);
       } catch (error) {
         return Promise.reject(error);
@@ -48,8 +51,8 @@ export const usePermissionStore = defineStore({
     /**
      * 扁平化路由: 每个路由都是同级结构清晰,但是不能路由页面嵌套;
      * 用途:
-     *    tabs渲染;
-     *    可以用于用于添加动态路由=>扁平化添加动态路由;
+     *    tabs初始化数据;
+     *    用于添加动态路由=>扁平化添加动态路由;
      */
     flatMenubarList_getters: (state): Menu.MenuOptions[] =>
       getFlatMenuList(state.menuList)

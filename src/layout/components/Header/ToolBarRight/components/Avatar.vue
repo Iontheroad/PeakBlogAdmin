@@ -2,26 +2,21 @@
   <el-dropdown class="user-container" trigger="click">
     <div class="user-info">
       <img :src="userInfo?.avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
-      <span class="user-name">Peak<CaretBottom class="icon" /></span>
+      <span class="user-name">{{ userInfo?.realName }}<CaretBottom class="icon" /></span>
     </div>
     <template #dropdown>
-      <!-- 点击下拉 -->
-      <el-dropdown-menu class="user-dropdown">
-        <!-- 回首页 -->
+      <el-dropdown-menu>
         <router-link to="/">
-          <el-dropdown-item>Home</el-dropdown-item>
+          <el-dropdown-item>{{ $t("avatar.home") }}</el-dropdown-item>
         </router-link>
-        <!-- GitHub -->
         <a target="_blank" href="https://github.com/Iontheroad/Peak-Vue3-Admin">
-          <el-dropdown-item>Github</el-dropdown-item>
+          <el-dropdown-item>{{ $t("avatar.github") }}</el-dropdown-item>
         </a>
-        <!-- Gitee -->
         <a target="_blank" href="https://gitee.com/Iontheroad/peak-vue3-admin">
-          <el-dropdown-item>Gitee</el-dropdown-item>
+          <el-dropdown-item>{{ $t("avatar.gitee") }}</el-dropdown-item>
         </a>
-        <!-- 退出登录 -->
-        <el-dropdown-item divided @click="click_logout">
-          <span style="display: block">Log Out</span>
+        <el-dropdown-item divided @click="clickLogout">
+          <span style="display: block">{{ $t("avatar.logout") }}</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </template>
@@ -33,15 +28,15 @@ import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { CaretBottom } from "@element-plus/icons-vue";
-
 import { useUserStore } from "@/store/modules/user";
+import { reqUserLogout } from "@/api/user";
 const userStore = useUserStore();
 const router = useRouter();
 const userInfo = computed(() => userStore.userInfo);
 /**
  * 点击退出登录
  */
-function click_logout() {
+function clickLogout() {
   ElMessageBox.confirm("确定注销并退出系统吗？", "温馨提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
@@ -49,11 +44,12 @@ function click_logout() {
   })
     .then(async () => {
       try {
-        await userStore.resetUser();
+        await reqUserLogout();
         ElMessage.success({
           showClose: true,
           message: "退出成功"
         });
+        userStore.resetUser();
         router.replace("/login");
       } catch (error) {
         ElMessage({

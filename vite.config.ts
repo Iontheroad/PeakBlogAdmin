@@ -7,6 +7,7 @@ import vueSetupExtend from "unplugin-vue-setup-extend-plus/vite";
 import { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
+import { viteMockServe } from "vite-plugin-mock";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
@@ -18,7 +19,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     base: env.VITE_PUBLIC_PATH,
     resolve: {
       alias: {
-        "@": resolve(__dirname, "./src")
+        "@": resolve(__dirname, "./src"),
+        "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js" // 清除i18n控制栏警告
       }
     },
     css: {
@@ -60,6 +62,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       }),
       Components({
         resolvers: [ElementPlusResolver()]
+      }),
+      viteMockServe({
+        mockPath: "./src/mocks", // 用于指定 Mock.js 文件所在的路径
+        enable: true // 是否启动 Mock Server  (实际生产环境建议关闭，只在本地开发时启用，比较方便调试)
       })
     ]
   };

@@ -2,7 +2,7 @@
  * @name 角色api
  */
 import request from "@/utils/request.ts";
-const local_prefix = "/blog";
+const local_prefix = "/admin";
 
 /**
  * 查询角色

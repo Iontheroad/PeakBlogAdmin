@@ -16,11 +16,9 @@ export interface TabsState {
 }
 
 export interface TabsItemType {
-  icon: string;
-  title: string;
   path: string;
   name: string;
-  isAffix: boolean;
+  meta: Menu.MenuMeta;
 }
 
 export const useTabsStore = defineStore("tabsStore", {
@@ -75,13 +73,21 @@ export const useTabsStore = defineStore("tabsStore", {
       let routeNameList: string[] = []; // 记录
       this.tabsList = this.tabsList.filter((item) => {
         // 保留当前项 和 固定项
-        if (item.name == routeName || item.isAffix) {
+        if (item.name == routeName || item.meta.isAffix) {
           routeNameList.push(item.name);
           return item;
         }
       });
       // 重置缓存 // INFO: 此处的重置保留了固定tab,您可以只留下当前tab
       this.resetKeepAliveList(routeNameList);
+    },
+
+    /**
+     * @description 重置 tabs
+     */
+    resetTabs_actions() {
+      this.tabsList = [];
+      this.resetKeepAliveList();
     },
 
     /**

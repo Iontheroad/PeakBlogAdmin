@@ -91,9 +91,9 @@ const submit = () => {
 async function userLogin() {
   try {
     let result = await reqUserLogin(formData);
-    // let { access_token, username, refresh_token } = result.data;
     userStore.setToken(result.data);
     ElMessage.success("登录成功");
+    userStore.getUserInfo(); // 获取用户信息
     router.push("/");
   } catch (error) {
     console.log(error);
