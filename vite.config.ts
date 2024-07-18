@@ -8,6 +8,7 @@ import { resolve } from "path";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { viteMockServe } from "vite-plugin-mock";
+import vueDevTools from "vite-plugin-vue-devtools";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
@@ -51,6 +52,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     plugins: [
       vue(),
       vueJsx(),
+      vueDevTools(),
       // name 可以写在 script 标签上
       vueSetupExtend({}),
       createSvgIconsPlugin({
