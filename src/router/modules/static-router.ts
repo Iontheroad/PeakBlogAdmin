@@ -16,6 +16,24 @@ export const staticRoute = [
     component: () => import("@/layout/index.vue"),
     redirect: "/",
     children: [
+      {
+        path: "/home/index",
+        name: "Home",
+        component: () => import("@/views/home/index.vue"),
+        meta: {
+          title: "首页",
+          icon: "menu-home",
+          roles: ["admin"],
+          activeMenu: "/home/index",
+          isHidden: false,
+          isLink: false,
+          isFull: false,
+          isAffix: true,
+          isKeepAlive: false,
+          isBreadcrumbHidden: false,
+          isAlwaysShow: false
+        }
+      }
       // {
       //   path: "/home",
       //   name: "Home",
