@@ -4,6 +4,7 @@
 import { defineStore } from "pinia";
 import type { PersistedStateOptions } from "pinia-plugin-persistedstate";
 import { useTabsStore } from "./tabs";
+import { usePermissionStore } from "./permission";
 import { reqSelectUser } from "@/api/user";
 interface UserProps {
   access_token: string;
@@ -60,6 +61,8 @@ export const useUserStore = defineStore({
       this.userInfo = {};
       const tabsStore = useTabsStore();
       tabsStore.resetTabs_actions(); // 清空缓存的tabs和路由
+      const permissionStore = usePermissionStore();
+      permissionStore.menuList = []; // 清空缓存的路由
     }
   },
   getters: {},

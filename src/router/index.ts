@@ -41,7 +41,7 @@ const router = createRouter({
   scrollBehavior: () => ({ left: 0, top: 0 })
 });
 
-const ROUTE_WHITE_LIST = ["/", "/home", "/500"]; // 白名单
+const ROUTE_WHITE_LIST = ["/500"]; // 白名单
 
 /**
  * @description 路由拦截，登录拦截
@@ -58,10 +58,11 @@ router.beforeEach(async (to, from, next) => {
 
   // 3.是否访问的登录页
   if (to.path.toLocaleLowerCase().startsWith("/login")) {
-    // 有Token就在当前页
+    // 有Token 回到当前页
     if (userStore.access_token) return next(from.fullPath);
-    // 没有token重定向到登录页,
-    // 清空路由
+
+    // 没有token  清空路由 跳转登录页
+    resetRouter();
     return next();
   }
 
@@ -81,6 +82,17 @@ router.beforeEach(async (to, from, next) => {
   // 7.正常访问页面
   next();
 });
+
+/**
+ * @description 重置路由
+ * */
+export const resetRouter = () => {
+  const permissionStore = usePermissionStore();
+  permissionStore.menubarList_getters.forEach((route) => {
+    const { name } = route;
+    if (name && router.hasRoute(name)) router.removeRoute(name);
+  });
+};
 
 /**
  * @description 路由跳转错误
