@@ -11,6 +11,7 @@ import { viteMockServe } from "vite-plugin-mock";
 import vueDevTools from "vite-plugin-vue-devtools";
 import Inspect from "vite-plugin-inspect";
 import Inspector from "vite-plugin-vue-inspector";
+import UnoCSS from "unocss/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
@@ -54,6 +55,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     plugins: [
       vue(),
       vueJsx(),
+      UnoCSS(),
       Inspect(),
       Inspector(),
       vueDevTools(),
@@ -74,5 +76,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         enable: true // 是否启动 Mock Server  (实际生产环境建议关闭，只在本地开发时启用，比较方便调试)
       })
     ]
+    // optimizeDeps: {
+    //   // include: ["unocss"]
+    // }
   };
 });
