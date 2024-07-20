@@ -82,3 +82,27 @@ export function reqGetMenuList(): Promise<ResResultData<MenuItem[]>> {
     method: "get"
   });
 }
+
+/**
+ * 新增或更新菜单
+ * @param data
+ */
+export function reqInsetOrUpdateMenu(data: MenuItem) {
+  return request({
+    url: `${prefix}/menu`,
+    method: "post",
+    data
+  });
+}
+
+/**
+ * 删除菜单
+ * @param data
+ */
+export function reqDeleteMenu(data: { ids: number[] }) {
+  return request({
+    url: `${prefix}/menu`,
+    method: "delete",
+    data
+  });
+}

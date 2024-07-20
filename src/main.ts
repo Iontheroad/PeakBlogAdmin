@@ -4,6 +4,10 @@ import router from "@/router";
 import pinia from "@/store";
 import i18n from "@/languages/index"; // 国际化
 import "dayjs/locale/zh-cn"; // 日期国际化
+
+// unocss;
+import "virtual:uno.css";
+
 /* element */
 import "element-plus/dist/index.css";
 import "element-plus/theme-chalk/dark/css-vars.css";

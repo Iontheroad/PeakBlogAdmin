@@ -1,7 +1,7 @@
 <script setup lang="tsx">
-import { reqGetMenuList, MenuType, MenuItem } from "@/api/menu";
+import { reqGetMenuList, reqDeleteMenu, MenuType, MenuItem } from "@/api/menu";
 import { ref, nextTick, h, computed } from "vue";
-import { ElTag } from "element-plus";
+import { ElTag, ElMessageBox, ElMessage } from "element-plus";
 import { Plus, Sort } from "@element-plus/icons-vue";
 import PeakConfigTable from "@/components/PeakConfigTable/index.vue";
 import { setColsConfig } from "@/components/PeakConfigTable/index";
@@ -43,11 +43,13 @@ const tableColumns = setColsConfig(
     {
       prop: "menu_name",
       label: "菜单名称",
-      align: "left"
+      align: "left",
+      width: 200
     },
     {
       prop: "menu_type",
       label: "菜单类型",
+      width: 100,
       customRender({ row }) {
         return (
           <>
@@ -60,7 +62,8 @@ const tableColumns = setColsConfig(
     },
     {
       prop: "route_name",
-      label: "路由别名"
+      label: "路由别名",
+      width: 140
     },
     {
       prop: "path",
@@ -77,22 +80,27 @@ const tableColumns = setColsConfig(
     },
     {
       prop: "order_num",
-      label: "排序"
+      label: "排序",
+      width: 100
     },
     {
       prop: "operation",
       label: "操作",
+      width: 200,
       customRender({ row }) {
         return (
           <>
-            <el-link
-              type="primary"
-              style="margin-right: 10px"
-              onClick={() => clickUpdateRole(row)}
-            >
+            {row.menu_type !== MenuType["按钮"] && (
+              <el-link type="success" onClick={() => handleAdd(row)}>
+                新增
+              </el-link>
+            )}
+            <el-link type="primary" class="mx-10" onClick={() => clickUpdateRole(row)}>
               修改
             </el-link>
-            <el-link type="danger"> 删除 </el-link>
+            <el-link type="danger" onClick={() => clickDeleteMenu(row)}>
+              删除
+            </el-link>
           </>
         );
       }
@@ -141,6 +149,27 @@ function handleAdd(row: MenuItem) {
   isShowDialog.value = true;
   title.value = "添加菜单";
 }
+
+/**
+ * 删除
+ * @param row
+ */
+const clickDeleteMenu = (row: MenuItem) => {
+  ElMessageBox.confirm("此操作将永久删除该菜单, 是否继续?", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning"
+  }).then(async () => {
+    try {
+      await reqDeleteMenu({ ids: [row.menu_id] });
+      ElMessage.success("删除成功");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      getMenuList();
+    }
+  });
+};
 /**
  * 编辑
  * @param row
@@ -164,8 +193,12 @@ function toggleExpandAll() {
 </script>
 
 <template>
-  <el-card header="菜单管理待完善" class="menu_box">
-    <el-row :gutter="10" class="my-8">
+  <el-card
+    header="菜单管理"
+    class="menu_box flex flex-col"
+    body-class="flex-1 flex flex-col overflow-hidden"
+  >
+    <el-row :gutter="10" class="mb-10">
       <el-col :span="1.5">
         <el-button type="primary" plain :icon="Plus" @click="handleAdd">新增</el-button>
       </el-col>
@@ -181,6 +214,7 @@ function toggleExpandAll() {
       :data="menuList"
       :table-columns="tableColumns"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      flex-1
       row-key="menu_id"
       border
       :default-expand-all="isExpandAll"

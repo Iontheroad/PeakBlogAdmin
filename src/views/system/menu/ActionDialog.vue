@@ -6,7 +6,7 @@ import type { FormInstance } from "element-plus";
 import { ElMessage } from "element-plus";
 // import { reqInsertRole, reqUpdateRole } from "@/api/role";
 import { useResize } from "@/hooks/useResize";
-import { MenuItem } from "@/api/menu";
+import { MenuItem, MenuType, reqInsetOrUpdateMenu } from "@/api/menu";
 const props = defineProps<{
   isShowDialog: boolean;
   title: string;
@@ -42,9 +42,8 @@ watch(
   () => props.isShowDialog,
   (newVal) => {
     if (!newVal) return;
-    dialogFormRef.value?.resetFields(); // 先重置表单状态/
-    if (props.title === "添加菜单") roleForm.value = { ...props.rowItem };
-    else if (props.title === "编辑菜单") roleForm.value = { ...props.rowItem };
+    dialogFormRef.value?.resetFields();
+    roleForm.value = { ...props.rowItem };
   }
 );
 
@@ -68,8 +67,7 @@ const onSubmit = (formEl: FormInstance | undefined) => {
   formEl.validate(async (valid) => {
     if (!valid) return;
     try {
-      // if (props.title === "编辑角色") await reqUpdateRole(roleForm.value);
-      // else if (props.title === "新增角色") await reqInsertRole(roleForm.value);
+      await reqInsetOrUpdateMenu(roleForm.value);
       ElMessage.success(`${props.title}成功`);
     } catch (error) {
       console.log(error);
@@ -159,6 +157,39 @@ defineExpose({});
             />
           </el-form-item>
         </el-col>
+
+        <el-col :span="12" v-if="roleForm.menu_type != 'F'">
+          <el-form-item prop="route_name">
+            <template #label>
+              <span>
+                <el-tooltip
+                  content="路由地址的别名，用于访问的路由地址，如：地址：`/article/detail` ，别名：`articleDetail`"
+                  placement="top"
+                >
+                  <el-icon><question-filled /></el-icon>
+                </el-tooltip>
+                路由别名
+              </span>
+            </template>
+            <el-input v-model="roleForm.route_name" placeholder="请输入路由别名" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" v-if="roleForm.menu_type != 'F'">
+          <el-form-item prop="path">
+            <template #label>
+              <span>
+                <el-tooltip
+                  content="访问的路由地址，如：`user`，如外网地址需内链访问则以`http(s)://`开头"
+                  placement="top"
+                >
+                  <el-icon><question-filled /></el-icon>
+                </el-tooltip>
+                路由地址
+              </span>
+            </template>
+            <el-input v-model="roleForm.path" placeholder="请输入路由地址" />
+          </el-form-item>
+        </el-col>
         <el-col :span="12" v-if="roleForm.menu_type != 'F'">
           <el-form-item>
             <template #label>
@@ -178,22 +209,6 @@ defineExpose({});
             </el-radio-group>
           </el-form-item>
         </el-col>
-        <el-col :span="12" v-if="roleForm.menu_type != 'F'">
-          <el-form-item prop="path">
-            <template #label>
-              <span>
-                <el-tooltip
-                  content="访问的路由地址，如：`user`，如外网地址需内链访问则以`http(s)://`开头"
-                  placement="top"
-                >
-                  <el-icon><question-filled /></el-icon>
-                </el-tooltip>
-                路由地址
-              </span>
-            </template>
-            <el-input v-model="roleForm.path" placeholder="请输入路由地址" />
-          </el-form-item>
-        </el-col>
         <el-col :span="12" v-if="roleForm.menu_type == 'C'">
           <el-form-item prop="component">
             <template #label>
@@ -210,7 +225,7 @@ defineExpose({});
             <el-input v-model="roleForm.component" placeholder="请输入组件路径" />
           </el-form-item>
         </el-col>
-        <el-col :span="12" v-if="roleForm.menu_type != 'M'">
+        <el-col :span="12">
           <el-form-item>
             <el-input
               v-model="roleForm.perms"
@@ -288,7 +303,10 @@ defineExpose({});
             </el-radio-group>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <el-col
+          :span="12"
+          v-if="[MenuType['目录'], MenuType['菜单']].includes(roleForm.menu_type)"
+        >
           <el-form-item>
             <template #label>
               <span>

@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div class="container">
+    <div class="container-wrapper">
       <div
         class="drop"
         :class="{ register: actionType == 'register', forget: actionType == 'forget' }"
@@ -121,7 +121,7 @@ async function userRegister() {
   align-items: center;
   min-height: 100vh;
   background: #eff0f4;
-  .container {
+  .container-wrapper {
     position: relative;
 
     // left: -80px;
@@ -353,7 +353,7 @@ async function userRegister() {
 
   // 媒体查询
   @media only screen and (width <= 768px) {
-    .container {
+    .container-wrapper {
       flex-direction: column !important;
       .small-drop {
         display: flex;
