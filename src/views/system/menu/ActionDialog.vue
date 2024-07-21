@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Search, QuestionFilled } from "@element-plus/icons-vue";
+import { QuestionFilled } from "@element-plus/icons-vue";
 import IconSelect from "@/components/IconSelect/index.vue";
 import { ref, watch } from "vue";
 import type { FormInstance } from "element-plus";
@@ -46,16 +46,6 @@ watch(
     roleForm.value = { ...props.rowItem };
   }
 );
-
-const iconSelectRef = ref(null);
-/** 展示下拉图标 */
-function showSelectIcon() {
-  iconSelectRef.value.reset();
-}
-/** 选择图标 */
-function selected(name) {
-  roleForm.value.icon = name;
-}
 
 // 关闭
 const onClose = () => {
@@ -114,33 +104,7 @@ defineExpose({});
         </el-col>
         <el-col :span="24" v-if="roleForm.menu_type != 'F'">
           <el-form-item label="菜单图标" prop="icon">
-            <el-popover placement="bottom-start" :width="540" trigger="click">
-              <template #reference>
-                <el-input
-                  v-model="roleForm.icon"
-                  placeholder="点击选择图标"
-                  @blur="showSelectIcon"
-                  readonly
-                >
-                  <template #prefix>
-                    <SvgIcon
-                      v-if="roleForm.icon"
-                      :icon-name="roleForm.icon"
-                      class="el-input__icon"
-                      style="height: 32px; width: 16px"
-                    />
-                    <el-icon v-else style="height: 32px; width: 16px">
-                      <Search />
-                    </el-icon>
-                  </template>
-                </el-input>
-              </template>
-              <icon-select
-                ref="iconSelectRef"
-                @selected="selected"
-                :active-icon="roleForm.icon"
-              />
-            </el-popover>
+            <icon-select v-model="roleForm.icon" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
