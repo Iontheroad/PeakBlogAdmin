@@ -2,6 +2,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "@/router";
 import pinia from "@/store";
+import setupPlugins from "@/plugins";
+
 import i18n from "@/languages/index"; // 国际化
 import "dayjs/locale/zh-cn"; // 日期国际化
 
@@ -24,5 +26,4 @@ import SvgIcon from "@/components/SvgIcon/index.vue";
 const app = createApp(App);
 
 app.component("SvgIcon", SvgIcon);
-
-app.use(router).use(i18n).use(pinia).mount("#app");
+app.use(router).use(setupPlugins).use(i18n).use(pinia).mount("#app");
