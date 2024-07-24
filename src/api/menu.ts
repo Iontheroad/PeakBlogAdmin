@@ -14,6 +14,23 @@ export enum MenuType {
   "菜单" = "C",
   "按钮" = "F"
 }
+export const menuType = [
+  {
+    label: "目录",
+    value: MenuType["目录"],
+    type: "primary"
+  },
+  {
+    label: "菜单",
+    value: MenuType["菜单"],
+    type: "success"
+  },
+  {
+    label: "按钮",
+    value: MenuType["按钮"],
+    type: "warning"
+  }
+];
 
 /**
  * 打开方式

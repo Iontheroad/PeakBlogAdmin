@@ -1,28 +1,11 @@
 <script setup lang="tsx">
-import { reqGetMenuList, reqDeleteMenu, MenuType, MenuItem } from "@/api/menu";
+import { reqGetMenuList, reqDeleteMenu, MenuType, menuType, MenuItem } from "@/api/menu";
 import { ref, nextTick, h, computed } from "vue";
 import { ElTag, ElMessageBox, ElMessage } from "element-plus";
 import { Plus, Sort } from "@element-plus/icons-vue";
 import PeakConfigTable from "@/components/PeakConfigTable/index.vue";
 import { setColsConfig } from "@/components/PeakConfigTable/index";
 import ActionDialog from "./ActionDialog.vue";
-const menuType = [
-  {
-    label: "目录",
-    value: MenuType["目录"],
-    type: "primary"
-  },
-  {
-    label: "菜单",
-    value: MenuType["菜单"],
-    type: "success"
-  },
-  {
-    label: "按钮",
-    value: MenuType["按钮"],
-    type: "warning"
-  }
-];
 
 const menuList = ref([]);
 const menuOptions = computed(() => {

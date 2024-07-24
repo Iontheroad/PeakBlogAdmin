@@ -42,3 +42,21 @@ declare namespace Menu {
   }
 }
 declare module "@wangeditor/editor-for-vue";
+
+/**
+ * 通用选项
+ */
+declare interface OptionType {
+  /**
+   * 值
+   */
+  value: string | number;
+  /**
+   * 文本
+   */
+  label: string;
+  /**
+   * 子选项
+   */
+  children?: OptionType[];
+}
