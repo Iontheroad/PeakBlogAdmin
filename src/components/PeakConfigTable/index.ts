@@ -4,7 +4,8 @@ import { VNode } from "vue";
 export type ColConfig = Partial<
   Parameters<Exclude<(typeof ElTableColumn)["setup"], undefined>>[0] & {
     slotHeader: string;
-    customRender: (...args: any[]) => VNode;
+    showOverflowTooltip;
+    customRender: (...args: any[]) => VNode | string;
   }
 >;
 

@@ -23,8 +23,8 @@
       <el-tab-pane label="通过" :name="2"></el-tab-pane>
       <el-tab-pane label="未通过" :name="3"></el-tab-pane>
     </el-tabs>
-    <PeakTable
-      :table-data="tables.tableData"
+    <PeakConfigTable
+      :data="tables.tableData"
       :table-columns="tables.tableColumns"
       :loading="tables.loading"
       border
@@ -56,7 +56,7 @@
         </el-link>
         <el-link type="danger" @click="clickDelete(row)"> 删除 </el-link>
       </template>
-    </PeakTable>
+    </PeakConfigTable>
     <el-pagination
       style="margin-top: 10px"
       v-show="total"
@@ -73,7 +73,8 @@ import { reactive, onMounted, ref, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox, ElMessage, type TabsPaneContext } from "element-plus";
 import { Search, Plus } from "@element-plus/icons-vue";
-import PeakTable from "@/components/PeakTable/index.vue";
+import PeakConfigTable from "@/components/PeakConfigTable/index.vue";
+import { setColsConfig } from "@/components/PeakConfigTable";
 import {
   reqSelectArticleList,
   reqDeleteArticle,
@@ -89,7 +90,7 @@ onMounted(() => {
 
 const tables = reactive({
   tableData: [] as Article.ArticleItem[],
-  tableColumns: [
+  tableColumns: setColsConfig([
     {
       type: "index",
       label: "序号",
@@ -98,7 +99,10 @@ const tables = reactive({
     {
       prop: "article_title",
       label: "文章标题",
-      showOverflowTooltip: true
+      showOverflowTooltip: true,
+      customRender() {
+        return "asdasds";
+      }
     },
     {
       prop: "article_digest",
@@ -112,29 +116,24 @@ const tables = reactive({
     },
     {
       prop: "article_type",
-      slot: "article_type",
       label: "文章类型"
       // formatter: (row) => (row.article_type == 1 ? "原创" : "转载")
     },
     {
       prop: "status",
-      slot: "status",
       label: "文章状态"
     },
     {
       prop: "comment_status",
-      slot: "comment_status",
       label: "评论状态"
     },
     {
       prop: "category",
-      slot: "category",
       label: "文章分类",
       showOverflowTooltip: true
     },
     {
       prop: "tags",
-      slot: "tags",
       label: "文章标签",
       showOverflowTooltip: true
     },
@@ -161,11 +160,10 @@ const tables = reactive({
     {
       label: "操作",
       prop: "action",
-      slot: "action",
       width: 120,
       fixed: "right"
     }
-  ],
+  ]),
   loading: false
 });
 let queryParams = ref<Article.ReqSelectArticleList>({

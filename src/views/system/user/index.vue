@@ -27,8 +27,8 @@
       </el-button>
     </div>
 
-    <PeakTable
-      :table-data="tables.tableData"
+    <PeakConfigTable
+      :data="tables.tableData"
       :table-columns="tables.tableColumns"
       :loading="tables.loading"
     >
@@ -42,7 +42,7 @@
         </el-link>
         <el-link type="danger" @click="clickDelete(row)"> 删除 </el-link>
       </template>
-    </PeakTable>
+    </PeakConfigTable>
 
     <ActionDialog
       v-model:is-show-dialog="isShowDialog"
@@ -57,13 +57,14 @@
 import { reactive, onMounted, ref, watch } from "vue";
 import { ElMessageBox, ElMessage } from "element-plus";
 import { Search, Plus } from "@element-plus/icons-vue";
-import PeakTable from "@/components/PeakTable/index.vue";
+import PeakConfigTable from "@/components/PeakConfigTable/index.vue";
+import { setColsConfig } from "@/components/PeakConfigTable";
 import ActionDialog from "./ActionDialog.vue";
 import { reqSelectUserList, reqDeleteUser, type User } from "@/api/user";
 
 const tables = reactive({
   tableData: [] as User[],
-  tableColumns: [
+  tableColumns: setColsConfig([
     {
       prop: "username",
       label: "用户名",
@@ -78,8 +79,8 @@ const tables = reactive({
     {
       prop: "sex",
       label: "性别",
-      showOverflowTooltip: true,
-      formatter: (row: User) => (row.sex === "m" ? "男" : row.sex === "w" ? "女" : "未知")
+      showOverflowTooltip: true
+      // formatter: (row: User) => (row.sex === "m" ? "男" : row.sex === "w" ? "女" : "未知")
     },
     {
       prop: "age",
@@ -104,7 +105,6 @@ const tables = reactive({
     },
     {
       prop: "state",
-      slot: "state",
       label: "用户状态",
       showOverflowTooltip: true
     },
@@ -121,10 +121,9 @@ const tables = reactive({
     {
       label: "操作",
       prop: "action",
-      slot: "action",
       width: 150
     }
-  ],
+  ]),
   loading: false
 });
 
