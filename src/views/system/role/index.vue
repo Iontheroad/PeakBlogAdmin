@@ -92,7 +92,7 @@ async function selectRoleList() {
   try {
     let result = await reqSelectRoleList({
       role_name: tableData.search,
-      sort: ""
+      sort: "asc"
     });
     tableData.data = result.data;
   } catch (error) {

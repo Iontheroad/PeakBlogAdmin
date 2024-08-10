@@ -48,7 +48,7 @@
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-form-item prop="sex" label="性别">
-            <el-radio-group :model-value="userForm.sex">
+            <el-radio-group v-model="userForm.sex">
               <el-radio value="u">未知</el-radio>
               <el-radio value="m">男</el-radio>
               <el-radio value="w">女</el-radio>
@@ -113,6 +113,19 @@
             </el-upload>
           </el-form-item>
         </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+          <el-form-item label="角色">
+            <el-select v-model="userForm.roleIds" multiple placeholder="请选择">
+              <el-option
+                v-for="item in rolesOptions"
+                :key="item.role_id"
+                :label="item.role_name"
+                :value="item.role_id"
+                :disabled="item.status == 0"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
     </el-form>
     <template #footer>
@@ -125,18 +138,19 @@
 </template>
 
 <script setup lang="ts">
+import { reqSelectRoleList, RoleItem } from "@/api/role";
 import { reactive, ref, watch } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
 import { Plus } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
 // import type { User } from "./index.vue";
-import { reqInsertUser, reqUpdateUser, type AddUser } from "@/api/user";
+import { reqInsertUser, reqUpdateUser, type User, type AddUser } from "@/api/user";
 import { useResize } from "@/hooks/useResize";
 
 const props = defineProps<{
   isShowDialog: boolean;
   title: string;
-  rowUser?: AddUser;
+  rowUser?: User;
 }>();
 const emits = defineEmits<{
   "update:isShowDialog": [value: boolean];
@@ -155,6 +169,20 @@ watch(
   { immediate: true }
 );
 
+const rolesOptions = ref<RoleItem[]>([]);
+/**
+ * 查询角色
+ */
+async function selectRoleList() {
+  try {
+    let result = await reqSelectRoleList();
+    rolesOptions.value = result.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+selectRoleList();
+
 const dialogFormRef = ref<FormInstance>();
 let temp: AddUser = {
   username: "",
@@ -165,7 +193,8 @@ let temp: AddUser = {
   address: "",
   phone: "",
   email: "",
-  state: 1
+  state: 1,
+  roleIds: []
 }; // 初始化模板
 const userForm = ref<AddUser>({ ...temp });
 const rules = reactive<FormRules<AddUser>>({
@@ -185,8 +214,11 @@ watch(
     if (!newVal) return;
     dialogFormRef.value?.resetFields(); // 先重置表单状态
     if (props.title === "新增用户") userForm.value = { ...temp };
-    else if (props.title === "编辑用户") userForm.value = { ...props.rowUser } as AddUser;
-    console.log(userForm.value);
+    else if (props.title === "编辑用户")
+      userForm.value = {
+        ...props.rowUser,
+        roleIds: props.rowUser.roles.map((i) => i.role_id)
+      };
   }
 );
 

@@ -79,8 +79,8 @@ const tables = reactive({
     {
       prop: "sex",
       label: "性别",
-      showOverflowTooltip: true
-      // formatter: (row: User) => (row.sex === "m" ? "男" : row.sex === "w" ? "女" : "未知")
+      showOverflowTooltip: true,
+      formatter: (row: User) => (row.sex === "m" ? "男" : row.sex === "w" ? "女" : "未知")
     },
     {
       prop: "age",

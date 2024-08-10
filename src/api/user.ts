@@ -3,6 +3,7 @@
  */
 // import type { AxiosResponse } from "axios";
 import request from "@/utils/request.ts";
+import { type RoleItem } from "./role";
 const prefix = "/blog";
 /**
  * 用户登录
@@ -97,8 +98,10 @@ export interface User {
   create_time?: string;
   update_time?: string;
   login_time?: string;
+  roles?: RoleItem[];
+  roleIds?: number[];
 }
-export type AddUser = Omit<User, "create_time" | "update_time" | "login_time">;
+export type AddUser = Omit<User, "roles" | "create_time" | "update_time" | "login_time">;
 
 /**
  * 新增用户

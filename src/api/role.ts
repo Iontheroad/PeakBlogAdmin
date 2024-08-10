@@ -21,7 +21,10 @@ export interface RoleItem {
  * 查询角色
  * @param data
  */
-export function reqSelectRoleList(data: any) {
+export function reqSelectRoleList(data?: {
+  role_name?: string;
+  sort?: "asc" | "desc"; // 排序( asc | desc ) 默认asc
+}) {
   return request({
     url: `${local_prefix}/role`,
     method: "get",

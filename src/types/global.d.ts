@@ -60,3 +60,9 @@ declare interface OptionType {
    */
   children?: OptionType[];
 }
+
+declare enum SexType {
+  男 = "m",
+  女 = "w",
+  未知 = "u"
+}
