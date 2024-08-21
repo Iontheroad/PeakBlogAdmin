@@ -90,7 +90,8 @@ const tableColumns = setColsConfig(
     }
   ],
   {
-    align: "center"
+    align: "center",
+    "show-overflow-tooltip": true
   }
 );
 
@@ -181,27 +182,31 @@ function toggleExpandAll() {
     class="menu_box flex flex-col"
     body-class="flex-1 flex flex-col overflow-hidden"
   >
-    <el-row :gutter="10" class="mb-10">
-      <el-col :span="1.5">
-        <el-button type="primary" plain :icon="Plus" @click="handleAdd">新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button type="info" plain :icon="Sort" @click="toggleExpandAll">
-          展开/折叠
-        </el-button>
-      </el-col>
-    </el-row>
+    <div class="mb-10">
+      <el-row :gutter="10">
+        <el-col :span="1.5">
+          <el-button type="primary" plain :icon="Plus" @click="handleAdd">新增</el-button>
+        </el-col>
+        <el-col :span="1.5">
+          <el-button type="info" plain :icon="Sort" @click="toggleExpandAll">
+            展开/折叠
+          </el-button>
+        </el-col>
+      </el-row>
+    </div>
 
-    <PeakConfigTable
-      v-if="refreshTable"
-      :data="menuList"
-      :table-columns="tableColumns"
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-      flex-1
-      row-key="menu_id"
-      border
-      :default-expand-all="isExpandAll"
-    ></PeakConfigTable>
+    <div>
+      <PeakConfigTable
+        v-if="refreshTable"
+        :data="menuList"
+        :table-columns="tableColumns"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        flex-1
+        row-key="menu_id"
+        border
+        :default-expand-all="isExpandAll"
+      ></PeakConfigTable>
+    </div>
 
     <ActionDialog
       v-model:is-show-dialog="isShowDialog"

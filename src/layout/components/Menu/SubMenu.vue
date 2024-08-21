@@ -4,7 +4,7 @@
       <!-- 根菜单信息 -->
       <template #title>
         <el-icon v-if="subItem?.meta?.icon">
-          <SvgIcon :icon-name="subItem?.meta?.icon" />
+          <IconRender :icon-name="subItem?.meta?.icon" />
         </el-icon>
         <span v-if="subItem?.meta?.title">
           {{ subItem.meta.title }}
@@ -14,7 +14,7 @@
     </el-sub-menu>
     <el-menu-item v-else :index="subItem?.path" @click="handleClickMenu(subItem)">
       <el-icon v-if="subItem?.meta?.icon">
-        <SvgIcon :icon-name="subItem.meta.icon" />
+        <IconRender :icon-name="subItem?.meta?.icon" />
       </el-icon>
       <template #title>
         <span>
@@ -25,6 +25,7 @@
   </template>
 </template>
 <script setup lang="ts" name="SubMenu">
+import IconRender from "@/components/IconRender/index.vue";
 import { useRouter } from "vue-router";
 
 defineProps<{
