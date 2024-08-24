@@ -81,9 +81,9 @@
               v-model="articleForm.comment_status"
               inline-prompt
               :active-value="1"
-              active-text="启"
-              :inactive-value="0"
-              inactive-text="禁"
+              active-text="开启"
+              :inactive-value="2"
+              inactive-text="关闭"
             ></el-switch>
           </el-form-item>
         </el-col>
@@ -99,19 +99,24 @@
         </el-col>
       </el-row>
 
-      <el-form-item>
+      <div class="flex justify-end">
         <el-button type="primary" @click="dialogVisible = true">预览</el-button>
         <el-button type="primary" @click="submitForm(articleFormRef)">提交</el-button>
-        <el-button @click="cancel(articleFormRef)">取消</el-button>
-      </el-form-item>
+        <el-button @click="cancel(articleFormRef)">返回</el-button>
+      </div>
     </el-form>
     <el-dialog
       v-model="dialogVisible"
       :title="articleForm.article_title"
+      :fullscreen="true"
       width="1300px"
       top="50px"
     >
-      <div class="view" v-html="articleForm.article_content"></div>
+      <MdPreview
+        editor-id="article-details"
+        :model-value="articleForm?.article_content"
+      />
+      <!-- <div class="view" v-html="articleForm.article_content"></div> -->
     </el-dialog>
   </el-card>
 </template>
@@ -122,6 +127,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ElMessage, type FormInstance } from "element-plus";
 // import WangEditor from "@/components/WangEditor/index.vue";
 import MdEditorV3 from "@/components/MdEditorV3/index.vue";
+import { MdPreview } from "md-editor-v3";
 import { reqSelectCategory, type Category } from "@/api/category";
 import { reqSelectTags, type Tags } from "@/api/tags";
 import {

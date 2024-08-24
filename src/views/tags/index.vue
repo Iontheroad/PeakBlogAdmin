@@ -188,11 +188,13 @@ const complete = (
   let propsArr = Object.keys(rules.value).map((key) => `tableData.${index}.${key}`);
 
   formEl.validateField(propsArr, async (isValid) => {
-    if (!isValid)
-      return ElMessage.warning({
+    if (!isValid) {
+      ElMessage.warning({
         message: "校验未通过,请按规范输入！",
         showClose: true
       });
+      return;
+    }
     try {
       if (row.isVirtual) {
         await reqInsertTags(row);

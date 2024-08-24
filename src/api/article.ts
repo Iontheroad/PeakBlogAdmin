@@ -128,14 +128,10 @@ export function reqDeleteArticle(data: { ids: number[] }) {
 /**
  * 文章审核
  */
-export function reqArticleReview(data: {
-  article_id: number;
-  status: ArticleStatus;
-  noPass_reason?: string;
-}) {
+export function reqArticleReview(data: Article.ReqArticleReview): Promise<ResResult> {
   return request({
     url: `${prefix}/article/review`,
-    method: "put",
+    method: "patch",
     data
   });
 }

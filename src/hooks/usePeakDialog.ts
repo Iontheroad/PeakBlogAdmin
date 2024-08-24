@@ -40,7 +40,7 @@ interface Prop {
  * @property {(prop: Prop)=>void} open - 打开模态框的函数，接受一个配置对象作为参数
  * @property {()=>void} remove - 移除模态框的函数
  */
-export function usePeakModal() {
+export function usePeakDialog() {
   const modalDom = document.createElement("div"); // 容器
   const id = ref(Number(generateUniqueId()) as number);
   const visible = ref(true);
@@ -153,6 +153,10 @@ export function usePeakModal() {
     /**
      * @description 移除模态框
      */
-    remove
+    remove,
+
+    close() {
+      visible.value = false;
+    }
   };
 }
