@@ -13,76 +13,82 @@
         <el-icon><Search /></el-icon>
         查询
       </el-button>
-      <el-button size="default" type="primary" @click="clickInsertRole">
-        <el-icon><Plus /></el-icon>
-        新增
-      </el-button>
     </div>
-    <el-tabs v-model="status" @tab-click="clickArticleStatus">
-      <el-tab-pane label="审核中" :name="1"></el-tab-pane>
-      <el-tab-pane label="通过" :name="2"></el-tab-pane>
-      <el-tab-pane label="未通过" :name="3"></el-tab-pane>
-    </el-tabs>
-    <PeakConfigTable
-      :data="tables.tableData"
-      :table-columns="tables.tableColumns"
-      :loading="tables.loading"
-      border
-    >
-      <template #article_type="{ row }">
-        <el-tag type="info" v-if="row.article_type === 1">原创</el-tag>
-        <el-tag type="info" v-else-if="row.article_type === 2">转载</el-tag>
-      </template>
-      <template #status="{ row }">
-        <el-tag type="warning" v-if="row.status === 1">审核中</el-tag>
-        <el-tag type="success" v-else-if="row.status === 2">通过</el-tag>
-        <el-tag type="danger" v-else-if="row.status === 3">未通过</el-tag>
-      </template>
-      <template #comment_status="{ row }">
-        <el-tag type="success" v-if="row.comment_status === 1">开启</el-tag>
-        <el-tag type="danger" v-else-if="row.comment_status === 2">关闭</el-tag>
-      </template>
-      <template #category="{ row }">
-        <el-tag type="success" size="small">{{ row.category.cate_name }} </el-tag>
-      </template>
-      <template #tags="{ row }">
-        <el-tag type="success" size="small" v-for="item in row.tags" :key="item.tag_id">
-          {{ item.tag_name }}
-        </el-tag>
-      </template>
-      <template #action="{ row }">
-        <el-link type="primary" @click="clickUpdate(row)" style="margin-right: 10px">
-          修改
-        </el-link>
-        <el-link type="danger" @click="clickDelete(row)"> 删除 </el-link>
-      </template>
-    </PeakConfigTable>
-    <el-pagination
-      style="margin-top: 10px"
-      v-show="total"
-      v-model:page-size="pageSize"
-      v-model:current-page="currentPage"
-      :total="total"
-      layout="total, sizes, prev, pager, next"
-    />
+    <div>
+      <el-tabs v-model="status" @tab-click="clickArticleStatus">
+        <el-tab-pane label="审核中" :name="ArticleStatus.审核中"></el-tab-pane>
+        <el-tab-pane label="通过" :name="ArticleStatus.通过"></el-tab-pane>
+        <el-tab-pane label="未通过" :name="ArticleStatus.未通过"></el-tab-pane>
+      </el-tabs>
+    </div>
+    <div>
+      <PeakConfigTable
+        :data="tables.tableData"
+        :table-columns="tables.tableColumns"
+        :loading="tables.loading"
+        border
+      >
+        <template #article_type="{ row }">
+          <el-tag type="info" v-if="row.article_type === 1">原创</el-tag>
+          <el-tag type="info" v-else-if="row.article_type === 2">转载</el-tag>
+        </template>
+        <template #status="{ row }">
+          <el-tag :type="StatusType[row.status]">
+            {{ ArticleStatus[row.status] }}
+          </el-tag>
+        </template>
+        <template #comment_status="{ row }">
+          <el-tag type="success" v-if="row.comment_status === 1">开启</el-tag>
+          <el-tag type="danger" v-else-if="row.comment_status === 2">关闭</el-tag>
+        </template>
+        <template #category="{ row }">
+          <el-tag type="success" size="small">{{ row.category.cate_name }} </el-tag>
+        </template>
+        <template #tags="{ row }">
+          <el-tag type="success" size="small" v-for="item in row.tags" :key="item.tag_id">
+            {{ item.tag_name }}
+          </el-tag>
+        </template>
+        <!-- FIXME: 文章审核按钮 -->
+        <!-- <template #action="{ row }">
+          <el-link type="primary" @click="clickUpdate(row)" style="margin-right: 10px">
+            修改
+          </el-link>
+          <el-link type="danger" @click="clickDelete(row)"> 删除 </el-link>
+        </template> -->
+      </PeakConfigTable>
+    </div>
+    <div>
+      <el-pagination
+        style="margin-top: 10px"
+        v-show="total"
+        v-model:page-size="pageSize"
+        v-model:current-page="currentPage"
+        :total="total"
+        layout="total, sizes, prev, pager, next"
+      />
+    </div>
   </el-card>
 </template>
 
 <script setup lang="ts">
 import { reactive, onMounted, ref, toRefs } from "vue";
-import { useRouter } from "vue-router";
-import { ElMessageBox, ElMessage, type TabsPaneContext } from "element-plus";
-import { Search, Plus } from "@element-plus/icons-vue";
+import type { TabsPaneContext } from "element-plus";
+import { Search } from "@element-plus/icons-vue";
 import PeakConfigTable from "@/components/PeakConfigTable/index.vue";
 import { setColsConfig } from "@/components/PeakConfigTable";
 import {
   reqSelectArticleList,
-  reqDeleteArticle,
   // reqArticleReview,
-  type Article
+  type Article,
+  ArticleStatus
 } from "@/api/article";
 
-const router = useRouter();
+const StatusType = {
+  [ArticleStatus.审核中]: "warning",
+  [ArticleStatus.通过]: "success",
+  [ArticleStatus.未通过]: "danger"
+};
 
 onMounted(() => {
   selectArticleList();
@@ -169,7 +175,7 @@ const tables = reactive({
 let queryParams = ref<Article.ReqSelectArticleList>({
   currentPage: 1,
   pageSize: 10,
-  status: 1,
+  status: ArticleStatus.审核中,
   tag_ids: ""
 });
 let { currentPage, pageSize, status } = toRefs(queryParams.value);
@@ -200,44 +206,6 @@ async function selectArticleList() {
  */
 const clickSearch = () => {
   selectArticleList();
-};
-
-// 新增用户操作
-const clickInsertRole = () => {
-  router.push({
-    path: "/article/read-write"
-  });
-};
-
-// 编辑用户操作
-let rowUser = ref<Article.ArticleItem>(); // 要回显的用户
-const clickUpdate = (row: Article.ArticleItem) => {
-  rowUser.value = row;
-  router.push({
-    name: "ArticleRW",
-    // path: "/article/read-write",
-    params: {
-      article_id: row.article_id
-    }
-  });
-};
-
-// 删除用户
-const clickDelete = (row: Article.ArticleItem) => {
-  ElMessageBox.confirm("此操作将永久删除该用户, 是否继续?", "提示", {
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
-    type: "warning"
-  }).then(async () => {
-    try {
-      await reqDeleteArticle({ ids: [row.article_id] });
-      ElMessage.success("删除成功");
-    } catch (error) {
-      console.log(error);
-    } finally {
-      selectArticleList();
-    }
-  });
 };
 </script>
 

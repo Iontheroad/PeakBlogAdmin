@@ -7,6 +7,11 @@ import { type Category } from "./category";
 import { type Tags } from "./tags";
 const prefix = "/blog";
 
+export enum ArticleStatus {
+  "审核中" = 1,
+  "通过" = 2,
+  "未通过" = 3
+}
 export namespace Article {
   // 获取文章 列表参数
   export interface ArticleItem {
@@ -19,7 +24,7 @@ export namespace Article {
     cate_id: number; // 分类id
     category: Category;
     tags: Tags[];
-    status: 1 | 2 | 3; // 文章状态 1审核中 2通过 3未通过
+    status: ArticleStatus; // 文章状态 1审核中 2通过 3未通过
     noPass_reason?: string; // 未通过原因
     comment_status: 1 | 2; // 评论状态 1开启 2关闭
     create_by: string;
@@ -32,7 +37,7 @@ export namespace Article {
 
   // 请求参数
   export interface ReqSelectArticleList extends ReqPage {
-    status: 1 | 2 | 3;
+    status: ArticleStatus;
     tag_ids: string; // 标签id (逗号隔开)
     cate_id?: number;
     searchKey?: string;
@@ -57,7 +62,7 @@ export namespace Article {
 
   // 文章审核 请求参数
   export type ReqArticleReview = Pick<ReqUpdateArticle, "article_id"> & {
-    status: 1 | 2;
+    status: ArticleStatus;
     noPass_reason?: string;
   };
 }
@@ -125,7 +130,7 @@ export function reqDeleteArticle(data: { ids: number[] }) {
  */
 export function reqArticleReview(data: {
   article_id: number;
-  status: 1 | 2;
+  status: ArticleStatus;
   noPass_reason?: string;
 }) {
   return request({
