@@ -177,45 +177,50 @@ function toggleExpandAll() {
 </script>
 
 <template>
-  <el-card
-    header="菜单管理"
-    class="menu_box flex flex-col"
-    body-class="flex-1 flex flex-col overflow-hidden"
-  >
-    <div class="mb-10">
-      <el-row :gutter="10">
-        <el-col :span="1.5">
-          <el-button type="primary" plain :icon="Plus" @click="handleAdd">新增</el-button>
-        </el-col>
-        <el-col :span="1.5">
-          <el-button type="info" plain :icon="Sort" @click="toggleExpandAll">
-            展开/折叠
-          </el-button>
-        </el-col>
-      </el-row>
-    </div>
+  <div class="menu_box">
+    <!-- <el-card class="max-h-full flex flex-col" body-class="flex-1 overflow-hidden"> -->
+    <el-card
+      class="h-full flex flex-col"
+      body-class="flex-1 flex flex-col overflow-hidden"
+    >
+      <template #header>
+        <el-row :gutter="10" justify="space-between" align="middle">
+          <div>菜单管理</div>
+          <div>
+            <el-button type="primary" plain :icon="Plus" @click="handleAdd">
+              新增
+            </el-button>
+            <el-button type="info" plain :icon="Sort" @click="toggleExpandAll">
+              展开/折叠
+            </el-button>
+          </div>
+        </el-row>
+      </template>
+      <div class="flex flex-col overflow-hidden">
+        <PeakConfigTable
+          v-if="refreshTable"
+          :data="menuList"
+          :table-columns="tableColumns"
+          :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+          row-key="menu_id"
+          border
+          :default-expand-all="isExpandAll"
+        ></PeakConfigTable>
+      </div>
 
-    <div>
-      <PeakConfigTable
-        v-if="refreshTable"
-        :data="menuList"
-        :table-columns="tableColumns"
-        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-        flex-1
-        row-key="menu_id"
-        border
-        :default-expand-all="isExpandAll"
-      ></PeakConfigTable>
-    </div>
+      <template #footer>
+        <el-button type="primary">d电风扇地方</el-button>
+      </template>
 
-    <ActionDialog
-      v-model:is-show-dialog="isShowDialog"
-      :title="title"
-      :menu-options="menuOptions"
-      :row-item="rowItem"
-      @get-menu-list="getMenuList"
-    />
-  </el-card>
+      <ActionDialog
+        v-model:is-show-dialog="isShowDialog"
+        :title="title"
+        :menu-options="menuOptions"
+        :row-item="rowItem"
+        @get-menu-list="getMenuList"
+      />
+    </el-card>
+  </div>
 </template>
 
 <style scoped lang="scss">
