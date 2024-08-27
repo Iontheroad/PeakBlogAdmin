@@ -208,10 +208,6 @@ function toggleExpandAll() {
         ></PeakConfigTable>
       </div>
 
-      <template #footer>
-        <el-button type="primary">d电风扇地方</el-button>
-      </template>
-
       <ActionDialog
         v-model:is-show-dialog="isShowDialog"
         :title="title"
