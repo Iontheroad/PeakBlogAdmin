@@ -10,7 +10,7 @@
       :model="roleForm"
       :rules="rules"
       size="default"
-      label-width="90px"
+      label-width="100px"
     >
       <el-row :gutter="35">
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
@@ -25,13 +25,16 @@
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
           <el-form-item prop="role_key" label="角色标识">
             <template #label>
-              <el-tooltip
-                effect="dark"
-                content="用于 `router/route.ts` meta.roles"
-                placement="top-start"
-              >
-                <span>角色标识</span>
-              </el-tooltip>
+              <span>
+                <el-tooltip
+                  effect="dark"
+                  content="角色的权限标识（唯一 ！）"
+                  placement="top-start"
+                >
+                  <el-icon><QuestionFilled /></el-icon>
+                </el-tooltip>
+                角色标识
+              </span>
             </template>
             <el-input
               v-model="roleForm.role_key"
@@ -89,14 +92,13 @@
 import { reactive, ref, watch } from "vue";
 import type { FormInstance, FormRules } from "element-plus";
 import { ElMessage } from "element-plus";
-import type { Role } from "./index.vue";
-import { reqInsertRole, reqUpdateRole } from "@/api/role";
+import { reqInsertRole, reqUpdateRole, type RoleItem } from "@/api/role";
 import { useResize } from "@/hooks/useResize";
 
 const props = defineProps<{
   isShowDialog: boolean;
   title: string;
-  rowRole?: Role;
+  rowRole?: RoleItem;
 }>();
 const emits = defineEmits<{
   "update:isShowDialog": [value: boolean];
@@ -116,14 +118,14 @@ watch(
 );
 
 const roleDialogFormRef = ref<FormInstance>();
-const roleForm = ref<Role>({
+const roleForm = ref<RoleItem>({
   role_name: "",
   role_key: "",
   role_sort: 1,
   status: 1, // 1 正常 0 停用
   remark: ""
 });
-const rules = reactive<FormRules<Role>>({
+const rules = reactive<FormRules<RoleItem>>({
   role_name: [
     { required: true, message: "角色名称不能为空", trigger: ["blur", "change"] }
   ],
@@ -164,7 +166,8 @@ watch(
         status: 1,
         remark: ""
       };
-    else if (props.title === "编辑角色") roleForm.value = { ...props.rowRole } as Role;
+    else if (props.title === "编辑角色")
+      roleForm.value = { ...props.rowRole } as RoleItem;
   }
 );
 
