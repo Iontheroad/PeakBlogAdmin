@@ -33,7 +33,7 @@ const tableColumns = setColsConfig(
       prop: "menu_type",
       label: "菜单类型",
       width: 100,
-      customRender({ row }) {
+      formatter(row) {
         return (
           <>
             <el-tag type={menuType.find((item) => item.value === row.menu_type)?.type}>
@@ -59,7 +59,7 @@ const tableColumns = setColsConfig(
     {
       prop: "perms",
       label: "权限标识",
-      customRender: ({ row }) => h(ElTag, { type: "info" }, () => row.perms)
+      formatter: (row) => h(ElTag, { type: "info" }, () => row.perms)
     },
     {
       prop: "order_num",
@@ -70,7 +70,7 @@ const tableColumns = setColsConfig(
       prop: "operation",
       label: "操作",
       width: 200,
-      customRender({ row }) {
+      formatter(row) {
         return (
           <>
             {row.menu_type !== MenuType["按钮"] && (

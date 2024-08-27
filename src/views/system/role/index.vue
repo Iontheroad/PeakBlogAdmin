@@ -42,7 +42,7 @@ const tableColumns = setColsConfig(
       prop: "status",
       label: "角色状态",
       width: 150,
-      customRender({ row: { status } }) {
+      formatter({ status }) {
         return (
           <>
             <el-tag type={status === 1 ? "success" : "info"}>
@@ -55,7 +55,7 @@ const tableColumns = setColsConfig(
     {
       prop: "operation",
       label: "操作",
-      customRender({ row }) {
+      formatter(row) {
         return (
           <>
             <el-link type="success" onClick={() => clickPrivileges(row)}>
