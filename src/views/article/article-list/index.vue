@@ -76,7 +76,7 @@ import { Search, Plus } from "@element-plus/icons-vue";
 import PeakConfigTable from "@/components/PeakConfigTable/index.vue";
 import { setColsConfig } from "@/components/PeakConfigTable";
 import {
-  reqSelectArticleList,
+  reqSelectSelfArticleList,
   reqDeleteArticle,
   type Article,
   ArticleStatus
@@ -91,7 +91,7 @@ const StatusType = {
 const router = useRouter();
 
 onMounted(() => {
-  selectArticleList();
+  selectSelfArticleList();
 });
 
 const tables = reactive({
@@ -177,10 +177,10 @@ let total = ref(0);
 /**
  * @description 查询文章
  */
-async function selectArticleList() {
+async function selectSelfArticleList() {
   tables.loading = true;
   try {
-    let result = await reqSelectArticleList(queryParams.value);
+    let result = await reqSelectSelfArticleList(queryParams.value);
     tables.tableData = result.data;
     total.value = result?.total;
   } catch (error) {
@@ -194,7 +194,7 @@ async function selectArticleList() {
  * @description 点击查询
  */
 const clickSearch = () => {
-  selectArticleList();
+  selectSelfArticleList();
 };
 
 /**
@@ -237,7 +237,7 @@ const clickDelete = (row: Article.ArticleItem) => {
     } catch (error) {
       console.log(error);
     } finally {
-      selectArticleList();
+      selectSelfArticleList();
     }
   });
 };

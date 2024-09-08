@@ -81,6 +81,19 @@ export function reqSelectArticleList(
 }
 
 /**
+ * 获取个人文章列表
+ */
+export function reqSelectSelfArticleList(
+  params: Article.ReqSelectArticleList
+): Promise<{ data: Article.ArticleItem[]; total: number }> {
+  return request({
+    url: `${prefix}/article/list/self`,
+    method: "get",
+    params
+  });
+}
+
+/**
  * 获取指定文章
  */
 export function reqSelectArticle(params: {
