@@ -53,7 +53,7 @@
   </el-card>
 </template>
 
-<script setup lang="ts" name="User">
+<script setup lang="tsx" name="User">
 import { reactive, onMounted, ref, watch } from "vue";
 import { ElMessageBox, ElMessage } from "element-plus";
 import { Search, Plus } from "@element-plus/icons-vue";
@@ -75,6 +75,18 @@ const tables = reactive({
       prop: "nickname",
       label: "用户昵称",
       showOverflowTooltip: true
+    },
+    {
+      prop: "roles",
+      label: "角色",
+      showOverflowTooltip: true,
+      formatter(row) {
+        return row.roles.map((role) => (
+          <el-tag type="info" size="small" class="mr-4">
+            {role.role_name}
+          </el-tag>
+        ));
+      }
     },
     {
       prop: "sex",

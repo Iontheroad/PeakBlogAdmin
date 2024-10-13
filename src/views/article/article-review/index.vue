@@ -210,7 +210,7 @@ function clickReview(row: Article.ArticleItem) {
     status: [
       {
         required: true,
-        message: "请设置友链状态",
+        message: "请设置是否通过",
         trigger: "change"
       }
     ]

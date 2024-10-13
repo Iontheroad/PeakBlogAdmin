@@ -1,5 +1,5 @@
 <template>
-  <MdEditor v-model="text" :toolbars="toolbars" />
+  <MdEditor class="md-editor-v3" v-model="text" :toolbars="toolbars" />
 </template>
 
 <script setup lang="ts">
@@ -68,3 +68,9 @@ const text = computed({
   }
 });
 </script>
+<style>
+.md-editor-v3 {
+  width: 100%;
+  height: 100%;
+}
+</style>

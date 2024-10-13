@@ -1,6 +1,10 @@
 <template>
-  <el-card class="article-read-write">
+  <el-card
+    class="article-read-write flex flex-col"
+    body-class="flex-1 flex flex-col justify-between h-full"
+  >
     <el-form
+      class="flex-1 flex flex-col"
       ref="articleFormRef"
       :model="articleForm"
       size="default"
@@ -87,24 +91,25 @@
             ></el-switch>
           </el-form-item>
         </el-col>
+      </el-row>
+      <el-row class="flex-1" :gutter="0">
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <el-form-item
             prop="article_content"
             label="文章内容"
-            style="display: flex; flex-direction: column"
+            style="display: flex; flex-direction: column; height: 100%"
           >
             <!-- <WangEditor v-model="articleForm.article_content" /> -->
             <MdEditorV3 v-model="articleForm.article_content" />
           </el-form-item>
         </el-col>
       </el-row>
-
-      <div class="flex justify-end">
-        <el-button type="primary" @click="dialogVisible = true">预览</el-button>
-        <el-button type="primary" @click="submitForm(articleFormRef)">提交</el-button>
-        <el-button @click="cancel(articleFormRef)">返回</el-button>
-      </div>
     </el-form>
+    <div class="flex justify-end mt-20">
+      <el-button type="primary" @click="dialogVisible = true">预览</el-button>
+      <el-button type="primary" @click="submitForm(articleFormRef)">提交</el-button>
+      <el-button @click="cancel(articleFormRef)">返回</el-button>
+    </div>
     <el-dialog
       v-model="dialogVisible"
       :title="articleForm.article_title"
@@ -270,4 +275,8 @@ const cancel = (formEl: FormInstance | undefined) => {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.article-read-write {
+  min-height: 100%;
+}
+</style>
