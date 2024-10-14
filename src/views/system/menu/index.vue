@@ -3,6 +3,7 @@ import { reqGetMenuList, reqDeleteMenu, MenuType, menuType, MenuItem } from "@/a
 import { ref, nextTick, h, computed } from "vue";
 import { ElTag, ElMessageBox, ElMessage } from "element-plus";
 import { Plus, Sort } from "@element-plus/icons-vue";
+import IconRender from "@/components/IconRender/index.vue";
 import PeakConfigTable from "@/components/PeakConfigTable/index.vue";
 import { setColsConfig } from "@/components/PeakConfigTable/index";
 import ActionDialog from "./ActionDialog.vue";
@@ -30,16 +31,22 @@ const tableColumns = setColsConfig(
       width: 200
     },
     {
+      prop: "icon",
+      label: "图标",
+      width: 80,
+      formatter(row) {
+        return <IconRender icon-name={row.icon} />;
+      }
+    },
+    {
       prop: "menu_type",
       label: "菜单类型",
       width: 100,
       formatter(row) {
         return (
-          <>
-            <el-tag type={menuType.find((item) => item.value === row.menu_type)?.type}>
-              {menuType.find((item) => item.value === row.menu_type)?.label}
-            </el-tag>
-          </>
+          <el-tag type={menuType.find((item) => item.value === row.menu_type)?.type}>
+            {menuType.find((item) => item.value === row.menu_type)?.label}
+          </el-tag>
         );
       }
     },
@@ -101,7 +108,7 @@ let title = ref("");
 /**
  * 新增按钮操作
  */
-function handleAdd(row: MenuItem) {
+function handleAdd(row?: MenuItem) {
   rowItem.value = {
     menu_id: 0,
     parent_id: 0,
@@ -178,7 +185,6 @@ function toggleExpandAll() {
 
 <template>
   <div class="menu_box">
-    <!-- <el-card class="max-h-full flex flex-col" body-class="flex-1 overflow-hidden"> -->
     <el-card
       class="h-full flex flex-col"
       body-class="flex-1 flex flex-col overflow-hidden"
@@ -187,7 +193,7 @@ function toggleExpandAll() {
         <el-row :gutter="10" justify="space-between" align="middle">
           <div>菜单管理</div>
           <div>
-            <el-button type="primary" plain :icon="Plus" @click="handleAdd">
+            <el-button type="primary" plain :icon="Plus" @click="handleAdd()">
               新增
             </el-button>
             <el-button type="info" plain :icon="Sort" @click="toggleExpandAll">

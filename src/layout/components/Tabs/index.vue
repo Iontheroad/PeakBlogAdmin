@@ -15,7 +15,7 @@
       >
         <template #label>
           <el-icon v-show="item.meta.icon && themeConfig.isShowTabsIcon">
-            <SvgIcon :icon-name="item.meta.icon" />
+            <IconRender :icon-name="item.meta.icon" />
           </el-icon>
           {{ item.meta.title }}
         </template>
@@ -27,6 +27,7 @@
 
 <script setup lang="ts" name="Tabs">
 import MoreButton from "./MoreButton.vue";
+import IconRender from "@/components/IconRender/index.vue";
 
 import { computed, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";

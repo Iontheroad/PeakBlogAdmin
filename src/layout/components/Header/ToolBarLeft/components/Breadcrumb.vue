@@ -6,9 +6,9 @@
           :class="{ 'last-item': index === breadcrumbList.length - 1 }"
           @click="clickBreadcrumb(item, index)"
         >
-          <SvgIcon
+          <IconRender
             v-show="themeConfig.isShowBreadcrumbIcon"
-            :icon-name="item.meta.icon"
+            :icon-name="item?.meta?.icon as string"
           />
           {{ item.meta.title }}
         </div>
@@ -18,6 +18,8 @@
 </template>
 
 <script setup lang="ts" name="Breadcrumb">
+import IconRender from "@/components/IconRender/index.vue";
+
 import { useRoute, useRouter, type RouteLocationMatched } from "vue-router";
 import { computed } from "vue";
 

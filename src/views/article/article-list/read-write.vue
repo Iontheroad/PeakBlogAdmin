@@ -48,8 +48,8 @@
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <el-form-item prop="article_type" label="文章类型">
             <el-radio-group v-model="articleForm.article_type">
-              <el-radio :label="1"> 原创 </el-radio>
-              <el-radio :label="2"> 转载 </el-radio>
+              <el-radio :value="1"> 原创 </el-radio>
+              <el-radio :value="2"> 转载 </el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
