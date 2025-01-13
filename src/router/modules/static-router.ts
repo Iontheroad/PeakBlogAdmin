@@ -1,11 +1,12 @@
 /**
  * static 静态路由
  */
+import { RouteRecordRaw } from "vue-router";
 
 /**
  * staticRoute 静态路由
  */
-export const staticRoute = [
+export const staticRoute: RouteRecordRaw[] = [
   {
     path: "/",
     redirect: "/home/index"
@@ -14,7 +15,7 @@ export const staticRoute = [
     path: "/layout",
     name: "Layout",
     component: () => import("@/layout/index.vue"),
-    redirect: "/",
+    redirect: "/home/index",
     children: [
       {
         path: "/home/index",
@@ -34,15 +35,6 @@ export const staticRoute = [
           isAlwaysShow: false
         }
       }
-      // {
-      //   path: "/home",
-      //   name: "Home",
-      //   alias: "/home",
-      //   component: () => import("@/views/home/index.vue"),
-      //   meta: {
-      //     title: "首页"
-      //   }
-      // }
     ]
   },
   {
@@ -55,7 +47,7 @@ export const staticRoute = [
 /**
  * errorRoute 错误页面路由
  */
-export const errorRoute = [
+export const errorRoute: RouteRecordRaw[] = [
   {
     path: "/403",
     name: "403",

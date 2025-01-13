@@ -64,5 +64,5 @@ const activeMenu = computed(() => {
 </script>
 
 <style lang="scss">
-@import "./index.scss";
+@import "./index";
 </style>

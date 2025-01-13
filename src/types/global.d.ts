@@ -23,17 +23,18 @@ declare namespace Menu {
     path: string;
     name: string;
     redirect?: string;
-    component?: string | (() => Promise<unknown>);
+    // component?: string | (() => Promise<unknown>);
+    component?: Record<string, RawRouteComponent>;
     children?: MenuOptions[];
     meta: MenuMeta;
   }
   interface MenuMeta {
-    title: string;
-    icon: string;
-    roles: string[];
+    title?: string;
+    icon?: string;
+    roles?: string[];
     activeMenu?: string;
     isHidden?: boolean;
-    isLink: boolean;
+    isLink?: boolean;
     isFull?: boolean;
     isAffix?: boolean;
     isKeepAlive?: boolean;
@@ -41,6 +42,7 @@ declare namespace Menu {
     isAlwaysShow?: boolean;
   }
 }
+
 declare module "@wangeditor/editor-for-vue";
 
 /**

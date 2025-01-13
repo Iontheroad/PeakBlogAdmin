@@ -2,7 +2,7 @@
   <el-dropdown class="user-container" trigger="click">
     <div class="user-info">
       <img :src="userInfo?.avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
-      <span class="user-name">{{ userInfo?.realName }}<CaretBottom class="icon" /></span>
+      <span class="user-name">{{ userInfo?.nickname }}<CaretBottom class="icon" /></span>
     </div>
     <template #dropdown>
       <el-dropdown-menu>

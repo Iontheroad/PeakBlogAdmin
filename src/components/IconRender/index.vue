@@ -33,19 +33,24 @@ interface Icon {
 enum IconType {
   "URL" = 1,
   "ELEMENT" = 2,
-  "SVG" = 3
+  "SVG" = 3,
+  "未知" = 4
 }
 const props = withDefaults(defineProps<Icon>(), {
   prefix: "icon"
 });
 
 const isType = computed((): IconType => {
+  console.log(props?.iconName, "props?.iconName");
+
   if (isExternal(props.iconName)) {
     return IconType.URL;
-  } else if (props.iconName.startsWith("el-icon-")) {
+  } else if (props?.iconName?.startsWith("el-icon-")) {
     return IconType.ELEMENT;
-  } else {
+  } else if (props?.iconName) {
     return IconType.SVG;
+  } else {
+    return IconType.未知;
   }
 });
 

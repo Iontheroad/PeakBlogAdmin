@@ -42,7 +42,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       // cors: true,
       proxy: {
         [env.VITE_API_URL]: {
-          // target: "http://47.94.217.248:8889",
           target: "http://localhost:10003",
           changeOrigin: true
           // rewrite: (path: string): string => {
