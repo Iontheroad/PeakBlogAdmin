@@ -8,7 +8,7 @@
     "serve": "vite",
     "build:dev": "vue-tsc && vite build --mode development",
     "build:test": "vue-tsc && vite build --mode test",
-    "build:prod": "vue-tsc --noEmit && vite build --mode production",
+    "build:prod": "vue-tsc && vite build --mode production",
     "build": "vite build",
     "type:check": "vue-tsc --noEmit --skipLibCheck",
     "preview": "npm run build:dev && vite preview",

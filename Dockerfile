@@ -11,12 +11,12 @@ RUN pnpm install
 
 # 复制项目文件并构建
 COPY . .
-RUN pnpm build:prod
+RUN pnpm build
 
 
-FROM nginx:alpine
+# FROM nginx:alpine
 
-# 从名为 build 的阶段中，将目录 /app/dist 的内容（即构建输出的静态文件）复制到 Nginx 静态文件目录 /usr/share/nginx/html 中。
-COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+# # 从名为 build 的阶段中，将目录 /app/dist 的内容（即构建输出的静态文件）复制到 Nginx 静态文件目录 /usr/share/nginx/html 中。
+# COPY --from=build /usr/src/app/dist /usr/share/nginx/html/blog-admin
 
-EXPOSE 80
+EXPOSE 10002
