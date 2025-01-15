@@ -1,7 +1,10 @@
-FROM node:latest as build
+FROM node:20.18.0 as build
 
 # 设置工作目录为容器内的 /usr/src/app，后续的命令都将在这个目录下执行
 WORKDIR /usr/src/app
+
+# 设置 npm 源为淘宝镜像
+RUN npm config set registry https://registry.npmmirror.com
 
 RUN npm install -g pnpm
 
@@ -14,9 +17,9 @@ COPY . .
 RUN pnpm build
 
 
-# FROM nginx:alpine
+FROM nginx:alpine
 
-# # 从名为 build 的阶段中，将目录 /app/dist 的内容（即构建输出的静态文件）复制到 Nginx 静态文件目录 /usr/share/nginx/html 中。
-# COPY --from=build /usr/src/app/dist /usr/share/nginx/html/blog-admin
+# # # 从名为 build 的阶段中，将目录 /app/dist 的内容（即构建输出的静态文件）复制到 Nginx 静态文件目录 /usr/share/nginx/html 中。
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html/blog-admin
 
-EXPOSE 10002
+# EXPOSE 10002
