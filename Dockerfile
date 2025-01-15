@@ -20,6 +20,6 @@ RUN pnpm build
 FROM nginx:alpine
 
 # # # 从名为 build 的阶段中，将目录 /app/dist 的内容（即构建输出的静态文件）复制到 Nginx 静态文件目录 /usr/share/nginx/html 中。
-COPY --from=build /usr/src/app/dist /usr/share/nginx/html/blog-admin
-
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+COPY --from=build /usr/src/app/nginx.conf /etc/nginx/conf.d/default.conf
 # EXPOSE 10002
